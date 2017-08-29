@@ -9,26 +9,22 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-
-<p>
-  <strong>Password:</strong>
-  <%= @user.password %>
-</p>
-
+<% if logged_in? %>
 <p>
   <strong>Timeslot:</strong>
   <%= @user.timeslot %>
 </p>
+<% end %>
 
-<p>
-  <strong>Redtailid:</strong>
-  <%= @user.redtailid %>
-</p>
-
-<p>
+<% if logged_in? %>
+  <p>
   <strong>Link:</strong>
   <%= @user.link %>
-</p>
+  </p>
+<% end %>
+
+
+
 
 <%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%= link_to 'Logout', logout_path, method: :delete %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170828040329) do
+ActiveRecord::Schema.define(version: 20170828225624) do
 
   create_table "appointments", force: :cascade do |t|
     t.integer  "ownerid"
@@ -29,8 +29,9 @@ ActiveRecord::Schema.define(version: 20170828040329) do
     t.integer  "timeslot"
     t.integer  "redtailid"
     t.string   "link"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "password_digest"
   end
 
 end
