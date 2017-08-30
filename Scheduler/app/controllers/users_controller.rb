@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @timeslot = User.find(set_user).timeslot
+    @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
 
     case @timeslot
       when 1 
@@ -23,6 +24,7 @@ class UsersController < ApplicationController
         then @slot = {start: "10:00am, 1:00pm, and 4:00pm", end: "11:00am, 2:00pm, and 5:00pm"}
     end
   end
+
   # GET /users/new
   def new
     @user = User.new
@@ -75,6 +77,9 @@ class UsersController < ApplicationController
   end
 
   def datepicker
+  end
+
+  def submit
   end
 
   private

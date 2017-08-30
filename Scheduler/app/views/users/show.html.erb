@@ -1,4 +1,3 @@
-<% require 'json' %>
 <p id="notice">
 <%= notice %>
 </p>
@@ -29,16 +28,33 @@
     <div class="actions">
       <%= f.submit %>
     </div>
-    <% end %> 
+    <% end %>
 <% end %>
 </p>
 <p>
   <strong>Link:</strong>
   <%= @user.link %>
 </p>
+<% reduser = 'redtailrachel' %>
+<% redpass = 'redtail1' %>
+<% headers = { 
+  "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+reduser+":"+redpass),
+  "Content-Type" => "application/json"
+  } %>
+<p>
+  <strong>Integrated with Redtail:</strong>
+  <% auth = HTTParty.get(
+    "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
+    :headers => headers)%>
+  <%= auth['Message'] %>
+  <br>
+  <% unless auth['Message'] == 'Success' %>
+  <button>Click to Integrate!</button>
+<% end %>
+<%= text_field_tag "field1" %>
+<%= password_field_tag "field2" %>
+</p>
 
-<button class="btn-primary"> Integrate with Redtail
-</button>
 <br>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Logout', logout_path, method: :delete %>
