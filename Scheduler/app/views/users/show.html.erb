@@ -1,30 +1,44 @@
-<p id="notice"><%= notice %></p>
-
+<% require 'json' %>
+<p id="notice">
+<%= notice %>
+</p>
 <p>
   <strong>Username:</strong>
   <%= @user.username %>
 </p>
-
 <p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
-<% if logged_in? %>
+<%= form_for(@user) do |f| %>
 <p>
-  <strong>Timeslot:</strong>
-  <%= @user.timeslot %>
-</p>
+  <% if @user.timeslot == nil %>
+    <strong> Current Timeslot: "No Timeslot Selected" </strong>
+<% else %>
+    <strong>Current Timeslot:</strong>
+    <% @slot.each do |key, value| %>
+    <%= "Your #{key} times are #{value}." %>
+    <% end %>
+  <%end%>
+  <br>
+  <strong>Update/Choose:</strong>
+    <%= f.select(:timeslot) do %>
+    <% [['8am, 11am, 2pm', 1], ['9am, 12pm, 3pm', 2],['10am, 1pm, 4pm', 3]].each do |c| -%>
+    <%= content_tag(:option, c.first, value: c.last) %>
+    <% end %>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    <% end %> 
 <% end %>
-
-<% if logged_in? %>
-  <p>
+</p>
+<p>
   <strong>Link:</strong>
   <%= @user.link %>
-  </p>
-<% end %>
+</p>
 
-
-
-
+<button class="btn-primary"> Integrate with Redtail
+</button>
+<br>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Logout', logout_path, method: :delete %>

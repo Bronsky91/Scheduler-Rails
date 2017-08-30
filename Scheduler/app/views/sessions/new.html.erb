@@ -1,4 +1,7 @@
 <% provide(:title, "Log in") %>
+<% flash.each do |key, value| %>
+  <%= content_tag :div, value, class: "flash #{key}" %>
+<% end %>
 <h1>Log in</h1>
 
 <div class="row">
