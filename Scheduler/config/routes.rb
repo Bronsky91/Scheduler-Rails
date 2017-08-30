@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   
   get "/:username", to: 'users#datepicker'
 
-  resources :appointments
   resources :users
 
   
