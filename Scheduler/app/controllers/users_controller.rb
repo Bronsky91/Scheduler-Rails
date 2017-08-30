@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show]
-
+  require 'base64'
   # GET /users
   # GET /users.json
 
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-
+    @user.link = "localhost:3000/#{@user.username}"
     respond_to do |format|
       if @user.save
         log_in @user
@@ -72,6 +72,9 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def datepicker
   end
 
   private
