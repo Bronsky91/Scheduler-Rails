@@ -35,25 +35,31 @@
   <strong>Link:</strong>
   <%= @user.link %>
 </p>
-<% reduser = 'redtailrachel' %>
-<% redpass = 'redtail1' %>
-<% headers = { 
-  "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+reduser+":"+redpass),
-  "Content-Type" => "application/json"
-  } %>
+<% reduser = params[:reduser] %>
+<% redpass = params[:redpass] %>
 <p>
-  <strong>Integrated with Redtail:</strong>
+    <strong>Integrate with Redtail:</strong>
+<% if reduser && redpass != nil%>
+  <% headers = { 
+    "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+reduser+":"+redpass),
+    "Content-Type" => "application/json"
+    } %>
   <% auth = HTTParty.get(
     "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
     :headers => headers)%>
-  <%= auth['Message'] %>
-  <br>
-  <% unless auth['Message'] == 'Success' %>
-  <button>Click to Integrate!</button>
+
+<%= auth['Message']%>
+<%end%>
+  </p>
+<%= form_tag do %>
+<%= label_tag(:reduser, "Redtail Username:") %>
+<%= text_field_tag(:reduser) %>
+<br>
+<%= label_tag(:redpass, "Redtail Password:") %>
+<%= password_field_tag(:redpass) %>
+<%= submit_tag("Log in") %>
 <% end %>
-<%= text_field_tag "field1" %>
-<%= password_field_tag "field2" %>
-</p>
+
 
 <br>
 <%= link_to 'Edit', edit_user_path(@user) %> |

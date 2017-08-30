@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
-  get "/:username", to: 'users#datepicker'
-  post "/:username", to: 'users#submit'
+  get "/:username", to: 'users#datepicker' #for requester to browse to datepicker
+  post "/:username", to: 'users#submit' #for requester to submit time
+  post "/users/:id", to: 'users#show', as: 'showme'#lets integration form post to page for api call
 
   resources :users
 

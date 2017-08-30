@@ -14,6 +14,8 @@ class UsersController < ApplicationController
   def show
     @timeslot = User.find(set_user).timeslot
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
+    @userkey = User.find(set_user).userkey
+    @redtailid = User.find(set_user).redtailid
 
     case @timeslot
       when 1 
@@ -34,6 +36,9 @@ class UsersController < ApplicationController
   def edit
   end
 
+  def api
+
+  end
   # POST /users
   # POST /users.json
   def create
@@ -77,9 +82,12 @@ class UsersController < ApplicationController
   end
 
   def datepicker
+    #for requester to browse to datepicker
   end
 
   def submit
+    #for requester to submit time
+
   end
 
   private
@@ -90,7 +98,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :link)
+      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :link, :userkey)
     end
 
     def logged_in_user
