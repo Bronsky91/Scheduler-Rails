@@ -24,13 +24,11 @@ class UsersController < ApplicationController
        @response = HTTParty.get(
           "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
           :headers => headers)
-    
-        userkey = @response['UserKey']
-        redtailid = @response['UserID']
-        userkey.save(User.find(set_user).userkey)
-        redtailid = User.find(set_user).redtailid
+        
+        @user.redtailid = @response['UserID'] # I need these two variables to save
+        @user.userkey = @response['UserKey'].to_s # into my database
+        @user.save!
     end
-
 
     case @timeslot
       when 1 
