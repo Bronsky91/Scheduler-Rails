@@ -24,7 +24,10 @@ class UsersController < ApplicationController
        @response = HTTParty.get(
           "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
           :headers => headers)
-        
+        if @response['Message'] != 'Success'
+          flash.now[:error] = "Invalid Redtail login, try again"
+          render 'show' 
+        end
         @user.redtailid = @response['UserID'] # I need these two variables to save
         @user.userkey = @response['UserKey'].to_s # into my database
         @user.save!

@@ -1,6 +1,6 @@
-<p id="notice">
-  <%= notice %>
-</p>
+<% flash.each do |key, value| %>
+<%= content_tag :div, value, class: "flash #{key}" %>
+<% end %>
 <p>
   <strong>Username:</strong>
   <%= @user.username %>
@@ -37,13 +37,16 @@
 </p>
 <p>
 <strong>Integrated with Redtail:</strong>
-  <% if @user.userkey && @user.redtailid != nil %>
+  <% if @user.redtailid != 0 %>
          Yes
     <%else%>
          No, sign in below to Integrate
   <% end %>
 </p>
-<%= form_tag do %>
+<%= javascript_tag do %>
+  var formcheck = <%= @user.redtailid %>
+<% end %>
+<%= form_tag showme_path, :method => :post, id: 'integrate' do %>
   <%= label_tag(:reduser, "Redtail Username:") %>
   <%= text_field_tag(:reduser) %>
   <br>
