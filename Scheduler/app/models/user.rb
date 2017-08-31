@@ -12,5 +12,8 @@ class User < ApplicationRecord
         self.email = email.downcase
     end
     
+    def save 
+        self.userkey = @userkey.save
+    end
 
 end

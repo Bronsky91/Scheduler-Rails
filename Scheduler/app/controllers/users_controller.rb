@@ -14,8 +14,23 @@ class UsersController < ApplicationController
   def show
     @timeslot = User.find(set_user).timeslot
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
-    @userkey = User.find(set_user).userkey
-    @redtailid = User.find(set_user).redtailid
+    @reduser = params[:reduser] 
+    @redpass = params[:redpass]
+    if @reduser && @redpass != nil
+      headers = { 
+         "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
+         "Content-Type" => "application/json"
+         } 
+       @response = HTTParty.get(
+          "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
+          :headers => headers)
+    
+        userkey = @response['UserKey']
+        redtailid = @response['UserID']
+        userkey.save(User.find(set_user).userkey)
+        redtailid = User.find(set_user).redtailid
+    end
+
 
     case @timeslot
       when 1 

@@ -1,5 +1,5 @@
 <p id="notice">
-<%= notice %>
+  <%= notice %>
 </p>
 <p>
   <strong>Username:</strong>
@@ -13,21 +13,21 @@
 <p>
   <% if @user.timeslot == nil %>
     <strong> Current Timeslot: "No Timeslot Selected" </strong>
-<% else %>
+  <% else %>
     <strong>Current Timeslot:</strong>
     <% @slot.each do |key, value| %>
     <%= "Your #{key} times are #{value}." %>
     <% end %>
-  <%end%>
-  <br>
-  <strong>Update/Choose:</strong>
-    <%= f.select(:timeslot) do %>
+  <% end %>
+<br>
+<strong>Update/Choose:</strong>
+  <%= f.select(:timeslot) do %>
     <% [['8am, 11am, 2pm', 1], ['9am, 12pm, 3pm', 2],['10am, 1pm, 4pm', 3]].each do |c| -%>
     <%= content_tag(:option, c.first, value: c.last) %>
-    <% end %>
-    <div class="actions">
-      <%= f.submit %>
-    </div>
+  <% end %>
+  <div class="actions">
+     <%= f.submit %>
+  </div>
     <% end %>
 <% end %>
 </p>
@@ -35,22 +35,14 @@
   <strong>Link:</strong>
   <%= @user.link %>
 </p>
-<% reduser = params[:reduser] %>
-<% redpass = params[:redpass] %>
 <p>
-    <strong>Integrate with Redtail:</strong>
-<% if reduser && redpass != nil%>
-  <% headers = { 
-    "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+reduser+":"+redpass),
-    "Content-Type" => "application/json"
-    } %>
-  <% auth = HTTParty.get(
-    "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
-    :headers => headers)%>
-
-<%= auth['Message']%>
-<%end%>
-  </p>
+<strong>Integrate with Redtail:</strong>
+  <% if @reduser && @redpass != nil %>
+    <% if @response['Message'] == 'Success' %>
+        <%= @response['Message'] %>
+    <% end %>
+  <% end %>
+</p>
 <%= form_tag do %>
 <%= label_tag(:reduser, "Redtail Username:") %>
 <%= text_field_tag(:reduser) %>
