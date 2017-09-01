@@ -16,9 +16,10 @@ class UsersController < ApplicationController
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     @reduser = params[:reduser] 
     @redpass = params[:redpass]
+
     if @reduser && @redpass != nil
-      headers = { 
-         "Authorization"  => "Basic "+Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
+       headers = { 
+         "Authorization"  => "Basic "+ Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
          "Content-Type" => "application/json"
          } 
        @response = HTTParty.get(
@@ -30,6 +31,15 @@ class UsersController < ApplicationController
         end
         @user.redtailid = @response['UserID'] # I need these two variables to save
         @user.userkey = @response['UserKey'].to_s # into my database
+        @user.save!
+        keyheaders = { 
+          "Authorization"  => "Userkeyauth "+Base64.strict_encode64(@apikey+":"+@user.userkey),
+          "Content-Type" => "application/json"
+          } 
+        @sso = HTTParty.get(
+          "http://dev.api2.redtailtechnology.com/crm/v1/rest/sso?ep=calendar", 
+          :headers => keyheaders)
+        @user.sso = @sso['ReturnURL']
         @user.save!
     end
 

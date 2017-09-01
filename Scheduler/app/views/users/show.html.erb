@@ -37,12 +37,17 @@
 </p>
 <p>
 <strong>Integrated with Redtail:</strong>
-  <% if @user.redtailid != 0 %>
-         Yes
-    <%else%>
-         No, sign in below to Integrate
+  <% if [nil, 0].include? @user.redtailid %>
+      No, log in below to integrate
+    <%else @user.redtailid %>
+       Yes
   <% end %>
 </p>
+    <p>
+    <% if @user.sso != nil %>
+     <%= link_to "SSO to Redtail Calendar", @user.sso, :target => "_blank"%>
+     <% end %>
+    </p>
 <%= javascript_tag do %>
   var formcheck = <%= @user.redtailid %>
 <% end %>
@@ -54,7 +59,6 @@
   <%= password_field_tag(:redpass) %>
   <%= submit_tag("Log in") %>
 <% end %>
-
 <br>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Logout', logout_path, method: :delete %>

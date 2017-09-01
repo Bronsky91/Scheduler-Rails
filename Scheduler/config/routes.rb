@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   
   get "/:username", to: 'users#datepicker' #for requester to browse to datepicker
   post "/:username", to: 'users#submit' #for requester to submit time
+  
   post "/users/:id", to: 'users#show', as: 'showme'#lets integration form post to page for api call
 
  
