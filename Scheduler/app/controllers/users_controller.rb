@@ -143,7 +143,7 @@ class UsersController < ApplicationController
     gon.calData = @calData
 
     @timeslot = @userName.timeslot
-
+    # Switch to select when Timeslot get viewed on Datepicker
     case @timeslot
       when 1 
         then gon.slot = '<tr>
@@ -182,7 +182,7 @@ class UsersController < ApplicationController
           </td>
         </tr>'
     end
-
+    # Switch to select which timeslot gets selected to block out conflicts
     case @timeslot
       when 1
         then gon.timeSlotStart = [800, 1100, 1400]

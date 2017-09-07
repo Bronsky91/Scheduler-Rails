@@ -3,7 +3,7 @@
 // You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready(function () {
   // Hides Redtail login form is Redtail ID is present
-  if (gon.redtailid != undefined) {
+  if (gon.redtailid != undefined || gon.redtailid != 0) {
     $("#integrate").hide();
   }
 
