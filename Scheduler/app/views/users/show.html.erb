@@ -1,3 +1,4 @@
+<%# Flash to indicate if login was successful or failed %>
 <% flash.each do |key, value| %>
 <%= content_tag :div, value, class: "flash #{key}" %>
 <% end %>
@@ -9,11 +10,13 @@
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
+<%# Form to Select Timeslot on User page %>
 <%= form_for(@user) do |f| %>
 <p>
   <% if @user.timeslot == nil %>
     <strong> Current Timeslot: "No Timeslot Selected" </strong>
   <% else %>
+  <%# Shows current timeslot selected and saved in Databsae %>
     <strong>Current Timeslot:</strong>
     <% @slot.each do |key, value| %>
     <%= "Your #{key} times are #{value}." %>
@@ -21,6 +24,7 @@
   <% end %>
   <br>
 <strong>Update/Choose:</strong>
+<%# Ability to change timeslots, integers represent Switch in controller %>
    <%= f.select(:timeslot) do %>
     <% [['8am, 11am, 2pm', 1], ['9am, 12pm, 3pm', 2],['10am, 1pm, 4pm', 3]].each do |c| -%>
     <%= content_tag(:option, c.first, value: c.last) %>
@@ -32,10 +36,14 @@
 <% end %>
 </p>
 <p>
+  <%# Shows link that was created in Controller for user which goes to Datepicker %>
   <strong>Link:</strong>
   <%= @user.link %>
+  <button id="linkshare">Click to Share Link</button>
 </p>
 <p>
+  <%# Logic to show if Redtail is integrated ie. if a Redtail ID is present in the database.. %>
+  <%# and if authentication went through %>
 <strong>Integrated with Redtail:</strong>
   <% if [nil, 0].include? @user.redtailid %>
       No, log in below to integrate
@@ -43,14 +51,7 @@
        Yes
   <% end %>
 </p>
-    <p>
-    <% if @user.sso != nil %>
-     <%= link_to "SSO to Redtail Calendar", @user.sso, :target => "_blank"%>
-     <% end %>
-    </p>
-<%= javascript_tag do %>
-  var formcheck = <%= @user.redtailid %>
-<% end %>
+<%# Redtail Login form, saves Redtail username and password to variables in controller %>
 <%= form_tag showme_path, :method => :post, id: 'integrate' do %>
   <%= label_tag(:reduser, "Redtail Username:") %>
   <%= text_field_tag(:reduser) %>

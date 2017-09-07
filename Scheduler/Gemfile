@@ -37,6 +37,9 @@ gem 'multi_xml'
 
 gem 'json'
 
+gem 'momentjs-rails'
+gem 'gon'
+
 gem 'bootstrap'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
