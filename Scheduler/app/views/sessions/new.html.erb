@@ -2,9 +2,11 @@
 <% flash.each do |key, value| %>
   <%= content_tag :div, value, class: "flash #{key}" %>
 <% end %>
-<h1>Log in</h1>
 
-<div class="row">
+
+<div class="row jumbotron">
+    <h1 class="title">Log in</h1>
+    <hr>
   <div class="col-md-6 col-md-offset-3">
     <%= form_for(:session, url: login_path) do |f| %>
 
@@ -14,9 +16,9 @@
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
+      <%= f.submit "Log in", class: "btn btn-success" %>
     <% end %>
 
-    <p><%= link_to "New User?", new_user_path %></p>
+    <p><%= link_to "New User?", new_user_path%></p>
   </div>
 </div>

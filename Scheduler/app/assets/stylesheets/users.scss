@@ -1,6 +1,13 @@
-// Place all the styles related to the Sessions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.title {
+    margin: auto;
+    width: 50%;
+    font: Garamond
+}
+#indexrow {
+    margin: auto;
+    width: 30%;
+}
+
 .alert-danger {
     background-color: #f2dede;
     border-color: #eed3d7;
@@ -28,9 +35,3 @@
     color: #468847;
     text-align: left;
  }
- #logintitle {
-    margin: auto;
-    margin-bottom: 20px;
-    width: 50%;
-    font: Garamond
-}

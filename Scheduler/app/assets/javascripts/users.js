@@ -7,6 +7,9 @@ $(document).ready(function () {
     $("#integrate").hide();
   }
 
+  
+
+
   // Creates variable for dates array
   var datesArray = [];
   var timesEnd = [];
