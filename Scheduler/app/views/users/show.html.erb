@@ -43,7 +43,7 @@
   <%# Shows link that was created in Controller for user which goes to Datepicker %>
   <strong>Link:</strong>
   <p style="display:inline;" id ="linkshare"><%= @user.link %></p>
-  <button data-copytarget="#linkshare" >Click to Copy Link</button>
+  <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
 </p>
 <p>
   <%# Logic to show if Redtail is integrated ie. if a Redtail ID is present in the database.. %>

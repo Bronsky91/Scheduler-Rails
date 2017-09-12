@@ -4,6 +4,14 @@ $(document).ready(function () {
     $("#integrate").hide();
   }
 
+  var clipboard = new Clipboard('[copy-to-clipboard-button]');
+  clipboard.on('success', function() {
+
+  });
+  clipboard.on('error', function() {
+    alert('Unable to copy');
+  });
+
 
   // Creates variable for dates array
   var datesArray = [];
