@@ -45,11 +45,11 @@ class UsersController < ApplicationController
         end
         # Saves RedtailID and UserKey to Database
         @user.redtailid = @response['UserID']
-        gon.redtailid = @user.redtailid
         @user.userkey = @response['UserKey'].to_s
         @user.save!
     end
 
+  gon.redtailid = @user.redtailid
 
   end
 

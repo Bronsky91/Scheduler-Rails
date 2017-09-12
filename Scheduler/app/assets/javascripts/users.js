@@ -1,13 +1,8 @@
-// Place all the behaviors and hooks related to the matching controller here. 
-// All this logic will automatically be available in application.js.
-// You can use CoffeeScript in this file: http://coffeescript.org/
 $(document).ready(function () {
   // Hides Redtail login form is Redtail ID is present
-  if (gon.redtailid != undefined || gon.redtailid != 0) {
+  if (gon.redtailid != undefined) {
     $("#integrate").hide();
   }
-
-  
 
 
   // Creates variable for dates array
@@ -175,9 +170,6 @@ $(document).ready(function () {
             var unixTimeHour = selectedDateOneHour.valueOf();
             var r = confirm("Schedule Date/Time?");
             if (r == true) {
-              console.log(gon.apikey);
-              console.log(gon.userID);
-              console.log(gon.userkey);
               // PUT call to create activity in Redtail
               $.ajax
                 ({

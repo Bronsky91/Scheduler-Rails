@@ -951,11 +951,11 @@
       <span class='kw'>end</span>
       <span class='comment'># Saves RedtailID and UserKey to Database
 </span>      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserID</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
       <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
       <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_save!'>save!</span>
   <span class='kw'>end</span>
 
+<span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
 
 <span class='kw'>end</span></pre>
     </td>
@@ -1057,7 +1057,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep  8 16:11:23 2017 by
+  Generated on Tue Sep 12 10:50:02 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>
