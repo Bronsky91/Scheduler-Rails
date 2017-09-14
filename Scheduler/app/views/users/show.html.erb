@@ -23,9 +23,7 @@
   <% else %>
   <%# Shows current timeslot selected and saved in Databsae %>
     <strong>Current Timeslot:</strong>
-    <% @slot.each do |key, value| %>
-    <%= "Your #{key} times are #{value}." %>
-    <% end %>
+    <%= get_start_end_time_slots(@slot)  %>
   <% end %>
   <br>
 <strong>Update/Choose:</strong>
