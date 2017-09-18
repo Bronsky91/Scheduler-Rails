@@ -21,9 +21,9 @@
   <% if @user.timeslot == nil %>
     <strong> Current Timeslot: "No Timeslot Selected" </strong>
   <% else %>
-  <%# Shows current timeslot selected and saved in Databsae %>
+  <%# Shows current timeslot selected and saved in Database %>
     <strong>Current Timeslot:</strong>
-    <%= get_start_end_time_slots(@slot)  %>
+    <%= get_start_end_time_slots(@timeslot)  %>
   <% end %>
   <br>
 <strong>Update/Choose:</strong>

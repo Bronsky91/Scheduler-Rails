@@ -394,12 +394,12 @@
       <pre class="lines">
 
 
-65
-66
-67</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_api'>api</span>
 
@@ -435,6 +435,13 @@
       <pre class="lines">
 
 
+63
+64
+65
+66
+67
+68
+69
 70
 71
 72
@@ -442,17 +449,10 @@
 74
 75
 76
-77
-78
-79
-80
-81
-82
-83
-84</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_user_params'>user_params</span><span class='rparen'>)</span>
@@ -489,6 +489,13 @@
       <pre class="lines">
 
 
+103
+104
+105
+106
+107
+108
+109
 110
 111
 112
@@ -570,17 +577,10 @@
 188
 189
 190
-191
-192
-193
-194
-195
-196
-197
-198</pre>
+191</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_datepicker'>datepicker</span>
   <span class='comment'>#for requester to browse to datepicker
@@ -702,16 +702,16 @@
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
-108</pre>
+95
+96
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -751,11 +751,11 @@
       <pre class="lines">
 
 
-62
-63</pre>
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
@@ -831,12 +831,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -905,14 +905,7 @@
 44
 45
 46
-47
-48
-49
-50
-51
-52
-53
-54</pre>
+47</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 14</span>
@@ -921,14 +914,7 @@
   <span class='comment'># Sets timeslot to Database after submission
 </span>  <span class='ivar'>@timeslot</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_set_user'>set_user</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span>
   <span class='comment'># Switch for timeslot selection logic, integers in database represent timeslots below
-</span>  <span class='kw'>case</span> <span class='ivar'>@timeslot</span>
-    <span class='kw'>when</span> <span class='int'>1</span> 
-       <span class='kw'>then</span> <span class='ivar'>@slot</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>start:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>8:00am, 11:00am, and 2:00pm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>end:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>9:00am, 12:00pm, and 3:00pm</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='kw'>when</span> <span class='int'>2</span>
-       <span class='kw'>then</span> <span class='ivar'>@slot</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>start:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>9:00am, 12:00pm, and 3:00pm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>end:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10:00am, 1:00pm, and 4:00pm</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-    <span class='kw'>when</span> <span class='int'>3</span>
-       <span class='kw'>then</span> <span class='ivar'>@slot</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>start:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>10:00am, 1:00pm, and 4:00pm</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>end:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>11:00am, 2:00pm, and 5:00pm</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-  <span class='kw'>end</span>
+</span>    
   <span class='comment'># Redtail given API key
 </span>  <span class='ivar'>@apikey</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1424B19F-5111-4B39-97A9-953EEEC81A18</span><span class='tstring_end'>&#39;</span></span>
   <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_apikey'>apikey</span> <span class='op'>=</span> <span class='ivar'>@apikey</span>
@@ -978,13 +964,13 @@
       <pre class="lines">
 
 
-200
-201
-202
-203</pre>
+193
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 200</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_submit'>submit</span>
   <span class='comment'>#for requester to submit time
@@ -1021,20 +1007,20 @@
       <pre class="lines">
 
 
+81
+82
+83
+84
+85
+86
+87
 88
 89
 90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
@@ -1057,7 +1043,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 14 12:47:44 2017 by
+  Generated on Mon Sep 18 10:02:41 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

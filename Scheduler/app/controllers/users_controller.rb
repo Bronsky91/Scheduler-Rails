@@ -15,14 +15,7 @@ class UsersController < ApplicationController
     # Sets timeslot to Database after submission
     @timeslot = User.find(set_user).timeslot
     # Switch for timeslot selection logic, integers in database represent timeslots below
-    case @timeslot
-      when 1 
-         then @slot = {start: "8:00am, 11:00am, and 2:00pm", end: "9:00am, 12:00pm, and 3:00pm"}
-      when 2
-         then @slot = {start: "9:00am, 12:00pm, and 3:00pm", end: "10:00am, 1:00pm, and 4:00pm"}
-      when 3
-         then @slot = {start: "10:00am, 1:00pm, and 4:00pm", end: "11:00am, 2:00pm, and 5:00pm"}
-    end
+      
     # Redtail given API key
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     gon.apikey = @apikey
