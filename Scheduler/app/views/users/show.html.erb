@@ -8,10 +8,6 @@
   </h1>
   <hr>
 <p>
-  <strong>Username:</strong>
-  <%= @user.username %>
-</p>
-<p>
   <strong>Email:</strong>
   <%= @user.email %>
 </p>
@@ -39,7 +35,7 @@
 </p>
 <p style="display:inline;">
   <%# Shows link that was created in Controller for user which goes to Datepicker %>
-  <strong>Link:</strong>
+  <strong>Datepicker Link:</strong>
   <p style="display:inline;" id ="linkshare"><%= @user.link %></p>
   <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
 </p>
@@ -49,18 +45,20 @@
 <strong>Integrated with Redtail:</strong>
   <% if [nil, 0].include? @user.redtailid %>
       No, log in below to integrate
-    <%else @user.redtailid %>
-       Yes
+    <% else @user.redtailid %>
+       Yes 
   <% end %>
 </p>
-<%# Redtail Login form, saves Redtail username and password to variables in controller %>
-<%= form_tag showme_path, :method => :post, id: 'integrate' do %>
-  <%= label_tag(:reduser, "Redtail Username:") %>
-  <%= text_field_tag(:reduser) %>
-  <br>
-  <%= label_tag(:redpass, "Redtail Password:") %>
-  <%= password_field_tag(:redpass) %>
-  <%= submit_tag("Log in",class: "btn btn-success") %>
+<% if [nil, 0].include? @user.redtailid %>
+  <%# Redtail Login form, saves Redtail username and password to variables in controller %>
+  <%= form_tag showme_path, :method => :post, id: 'integrate' do %>
+    <%= label_tag(:reduser, "Redtail Username:") %>
+    <%= text_field_tag(:reduser) %>
+    <br>
+    <%= label_tag(:redpass, "Redtail Password:") %>
+    <%= password_field_tag(:redpass) %>
+    <%= submit_tag("Integrate",class: "btn btn-success") %>
+  <% end %>
 <% end %>
 </div>
 <br>

@@ -1,17 +1,11 @@
 $(document).ready(function () {
-  // Hides Redtail login form is Redtail ID is present
-  if (gon.redtailid != undefined) {
-    $("#integrate").hide();
-  }
-
+  // Copy to clipboard logic for Requester LInk
   var clipboard = new Clipboard('[copy-to-clipboard-button]');
-  clipboard.on('success', function() {
-
+  clipboard.on('success', function () {
   });
-  clipboard.on('error', function() {
+  clipboard.on('error', function () {
     alert('Unable to copy');
   });
-
 
   // Creates variable for dates array
   var datesArray = [];
@@ -205,8 +199,5 @@ $(document).ready(function () {
         })
       });
     });
-
   });
-
-
 })

@@ -14,10 +14,9 @@ class UsersController < ApplicationController
   def show
     # Sets timeslot to Database after submission
     @timeslot = User.find(set_user).timeslot
-    # Switch for timeslot selection logic, integers in database represent timeslots below
-      
     # Redtail given API key
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
+    # Passes API key to JS file
     gon.apikey = @apikey
     # Redtail username and password entered from Show View
     @reduser = params[:reduser] 
@@ -41,7 +40,7 @@ class UsersController < ApplicationController
         @user.userkey = @response['UserKey'].to_s
         @user.save!
     end
-
+  # Passes RedtailID to JS file
   gon.redtailid = @user.redtailid
 
   end
@@ -55,9 +54,6 @@ class UsersController < ApplicationController
   def edit
   end
 
-  def api
-
-  end
   # POST /users
   # POST /users.json
   def create
@@ -132,7 +128,7 @@ class UsersController < ApplicationController
         }
       ].to_json
       )
-    # Gives variable to Javascript
+    # Passes variable to Javascript
     gon.calData = @calData
 
     @timeslot = @userName.timeslot
