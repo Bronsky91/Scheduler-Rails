@@ -33,7 +33,7 @@ class UsersController < ApplicationController
           # Message that will show in View if API auth failed
         if @response['Message'] != 'Success'
           flash.now[:error] = "Invalid Redtail login, try again"
-          render 'show' 
+          render 'show'
         end
         # Saves RedtailID and UserKey to Database
         @user.redtailid = @response['UserID']
@@ -176,18 +176,16 @@ class UsersController < ApplicationController
       when 1
         then gon.timeSlotStart = [800, 1100, 1400]
              gon.timeSlotEnd = [900, 1200, 1500]
+             gon.timeSlotStartCurrent = [730, 1030, 1330]
       when 2
         then gon.timeSlotStart = [900, 1200, 1500]
              gon.timeSlotEnd = [1000, 1300, 1600]
+             gon.timeSlotStartCurrent = [830, 1130, 1430]
       when 3
         then gon.timeSlotStart = [1000, 1300, 1600]
              gon.timeSlotEnd = [1100, 1400, 1700]
+             gon.timeSlotStartCurrent = [930, 1230, 1530]
     end
-
-  end
-
-  def submit
-    #for requester to submit time
 
   end
 

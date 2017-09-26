@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  // Copy to clipboard logic for Requester LInk
+  // Copy to clipboard logic for Requester Link
   var clipboard = new Clipboard('[copy-to-clipboard-button]');
   clipboard.on('success', function () {
   });
@@ -44,7 +44,7 @@ $(document).ready(function () {
       allDayDates.push(datesArray[i]);
     }
   }
-  // Makes Timeslots integars
+  // Converts Timeslots to integers
   var intTimeStart = [];
   var intTimeEnd = [];
   for (i = 0; i < timesStart.length; i++) {
@@ -56,7 +56,7 @@ $(document).ready(function () {
     intTimeEnd.push(Math.round(timesEnd[i] * 100));
   }
   // Creates Array of Objects of Each Date, Start and End Time
-  var calFunObj = {}
+  var calActObj = {}
   var act = "Activities";
   var activities = []
   for (i = 0; i < gon.calData.Activities.length; i++) {
@@ -68,17 +68,17 @@ $(document).ready(function () {
   }
   var fullTimeSlots = [];
   // Creates Object of Array of Date/Time Objects
-  calFunObj[act] = activities;
+  calActObj[act] = activities;
   // Loop to push full dates to fullTimesSlots array
   for (j = 0; j < gon.timeSlotStart.length; j++) {
-    for (i = 0; i < calFunObj.Activities.length; i++) {
-      if (calFunObj.Activities[i][2] <= gon.timeSlotStart[j] || calFunObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
+    for (i = 0; i < calActObj.Activities.length; i++) {
+      if (calActObj.Activities[i][2] <= gon.timeSlotStart[j] || calActObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
       } else {
-        fullTimeSlots.push(calFunObj.Activities[i][0])
+        fullTimeSlots.push(calActObj.Activities[i][0])
       }
     }
   }
-  // Creates 2 correlating arrays that counts the number of times slots are available each day
+  // Creates 2 correlating arrays that counts the number of times that slots are available each day
   function count(arr) {
     var a = [], b = [], prev;
     arr.sort();
@@ -138,27 +138,27 @@ $(document).ready(function () {
         todayT = todayT.replace(/:/g, '.');
         todayT = parseFloat(todayT);
         todayT = Math.round(todayT * 100);
-        var timeSlotStartCurrent = [830, 1130, 1430];
         // Hides timeslots if current time as already past and conflicts with timeslot
         var timeSlotButton = ['#first', '#middle', '#last'];
-        for (j = 0; j < timeSlotStartCurrent.length; j++) {
+        for (j = 0; j < gon.timeSlotStartCurrent.length; j++) {
           if ($('#datepicker').val() == today) {
-            if (todayT >= timeSlotStartCurrent[j]) {
+            if (todayT >= gon.timeSlotStartCurrent[j]) {
               $(timeSlotButton[j]).addClass('disabled');
             }
           }
         }
         // Hides timeslots if conflicts in Redtail occurs
         for (j = 0; j < gon.timeSlotStart.length; j++) {
-          for (i = 0; i < calFunObj.Activities.length; i++) {
-            if ($('#datepicker').val() == calFunObj.Activities[i][0]) {
-              if (calFunObj.Activities[i][2] <= gon.timeSlotStart[j] || calFunObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
+          for (i = 0; i < calActObj.Activities.length; i++) {
+            if ($('#datepicker').val() == calActObj.Activities[i][0]) {
+              if (calActObj.Activities[i][2] <= gon.timeSlotStart[j] || calActObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
               } else {
                 $(timeSlotButton[j]).addClass('disabled');
               }
             }
           }
         }
+        // Shows user that timeslot was chosen
         $('.timeSlot').on("click", function () {
           $(this).toggleClass('active');
           // Creates variables from chosen date/time

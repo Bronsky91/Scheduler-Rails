@@ -287,28 +287,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#submit-instance_method" title="#submit (instance method)">#<strong>submit</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>  &#x21d2; Object </a>
     
 
@@ -525,7 +503,10 @@
 184
 185
 186
-187</pre>
+187
+188
+189
+190</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 99</span>
@@ -610,12 +591,15 @@
     <span class='kw'>when</span> <span class='int'>1</span>
       <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>800</span><span class='comma'>,</span> <span class='int'>1100</span><span class='comma'>,</span> <span class='int'>1400</span><span class='rbracket'>]</span>
            <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>900</span><span class='comma'>,</span> <span class='int'>1200</span><span class='comma'>,</span> <span class='int'>1500</span><span class='rbracket'>]</span>
+           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>730</span><span class='comma'>,</span> <span class='int'>1030</span><span class='comma'>,</span> <span class='int'>1330</span><span class='rbracket'>]</span>
     <span class='kw'>when</span> <span class='int'>2</span>
       <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>900</span><span class='comma'>,</span> <span class='int'>1200</span><span class='comma'>,</span> <span class='int'>1500</span><span class='rbracket'>]</span>
            <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1000</span><span class='comma'>,</span> <span class='int'>1300</span><span class='comma'>,</span> <span class='int'>1600</span><span class='rbracket'>]</span>
+           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>830</span><span class='comma'>,</span> <span class='int'>1130</span><span class='comma'>,</span> <span class='int'>1430</span><span class='rbracket'>]</span>
     <span class='kw'>when</span> <span class='int'>3</span>
       <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1000</span><span class='comma'>,</span> <span class='int'>1300</span><span class='comma'>,</span> <span class='int'>1600</span><span class='rbracket'>]</span>
            <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1100</span><span class='comma'>,</span> <span class='int'>1400</span><span class='comma'>,</span> <span class='int'>1700</span><span class='rbracket'>]</span>
+           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>930</span><span class='comma'>,</span> <span class='int'>1230</span><span class='comma'>,</span> <span class='int'>1530</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
 <span class='kw'>end</span></pre>
@@ -879,7 +863,7 @@
         <span class='comment'># Message that will show in View if API auth failed
 </span>      <span class='kw'>if</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Success</span><span class='tstring_end'>&#39;</span></span>
         <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid Redtail login, try again</span><span class='tstring_end'>&quot;</span></span>
-        <span class='id identifier rubyid_render'>render</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span> 
+        <span class='id identifier rubyid_render'>render</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span>
       <span class='kw'>end</span>
       <span class='comment'># Saves RedtailID and UserKey to Database
 </span>      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserID</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
@@ -889,38 +873,6 @@
 <span class='comment'># Passes RedtailID to JS file
 </span><span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
 
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="submit-instance_method">
-  
-    #<strong>submit</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-189
-190
-191
-192</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 189</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_submit'>submit</span>
-  <span class='comment'>#for requester to submit time
-</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -989,7 +941,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Sep 23 22:43:20 2017 by
+  Generated on Tue Sep 26 15:42:19 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>
