@@ -23,13 +23,13 @@
   <% end %>
   <br>
 <strong>Update/Choose:</strong>
-<%# Ability to change timeslots, integers represent Switch in controller %>
+<%# Ability to change timeslots, integers represent Switch in helper %>
    <%= f.select(:timeslot) do %>
     <% [['8am, 11am, 2pm', 1], ['9am, 12pm, 3pm', 2],['10am, 1pm, 4pm', 3]].each do |c| -%>
     <%= content_tag(:option, c.first, value: c.last) %>
   <% end %>
   <div class="actions">
-     <%= f.submit "Update Timeslot"  %>
+     <%= f.submit "Update Timeslot" %>
     <% end %>
 <% end %>
 </p>

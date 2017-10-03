@@ -165,36 +165,79 @@ $(document).ready(function () {
           var selectedTime = $(this).val();
           var selectedDate = moment($('#datepicker').val() + ' ' + selectedTime, "D-M-YYYY HH mm");
           var selectedDateOneHour = moment(selectedDate).add(1, 'h');
-          document.getElementById("scheduleFun").onclick = function () {
+          document.getElementById("scheduleAct").onclick = function () {
+            var emailField = $("#email").val();
             var subjectData = $("#subject").val();
             var detailsData = $("#details").val();
             var unixTime = selectedDate.valueOf();
             var unixTimeHour = selectedDateOneHour.valueOf();
-            var r = confirm("Schedule Date/Time?");
-            if (r == true) {
-              // PUT call to create activity in Redtail
-              $.ajax
-                ({
-                  type: "PUT",
-                  url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
-                  contentType: "application/json",
-                  headers: {
-                    "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
-                  },
-                  data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
-                  success: function (data) {
-                    console.log(data);
-                    alert("Appointment Scheduled!");
-                    location.reload();
-                  }, error: function (XMLHttpRequest, textStatus, errorThrown)
-                  { alert(errorThrown); }
-                });
-            } else {
-              alert("Nothing scheduled yet");
-            }
-            // Clears Subject and Details boxess
-            $("#subject").val('');
-            $("#details").val('');
+            $.ajax
+              ({
+                type: "POST",
+                url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/contacts/search",
+                contentType: "application/json",
+                headers: {
+                  "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                },
+                data: JSON.stringify([{ "Field": 16, "Operand": 0, "Value": emailField }]),
+                success: function (clientData) {
+                  if (clientData.Contacts == null) {
+                    c = confirm("No Client found with email: " + emailField + ", Schedule anyway?");
+                    if (c == true) {
+                      // PUT call to create activity in Redtail
+                      $.ajax
+                        ({
+                          type: "PUT",
+                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
+                          contentType: "application/json",
+                          headers: {
+                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                          },
+                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
+                          success: function (actData) {
+                            console.log(actData);
+                            alert("Appointment Scheduled!");
+                            // Clears Subject and Details boxess
+                            $("#subject").val('');
+                            $("#details").val('');
+                            $("#email").val('');
+                            location.reload();
+                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                          { alert(errorThrown); }
+                        });
+                    } else {
+                      alert("Nothing scheduled yet");
+                    }
+                  } else {
+                    var clientID = clientData.Contacts[0].ClientID;
+                    var cf = confirm("Client Found: " + clientData.Contacts[0].FirstName + " " + clientData.Contacts[0].LastName + ". Schedule appointment?");
+                    if (cf == true) {
+                      // PUT call to create activity in Redtail
+                      $.ajax
+                        ({
+                          type: "PUT",
+                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
+                          contentType: "application/json",
+                          headers: {
+                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                          },
+                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData, "ClientID": clientID }),
+                          success: function (actData) {
+                            console.log(actData);
+                            alert("Appointment Scheduled!");
+                            // Clears Subject and Details boxess
+                            $("#subject").val('');
+                            $("#details").val('');
+                            $("#email").val('');
+                            location.reload();
+                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                          { alert(errorThrown); }
+                        });
+                    }
+                  }
+                }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                { alert(errorThrown); }
+              });
           }
         })
       });

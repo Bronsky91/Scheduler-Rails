@@ -500,13 +500,7 @@
 181
 182
 183
-184
-185
-186
-187
-188
-189
-190</pre>
+184</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 99</span>
@@ -520,9 +514,6 @@
   <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span>
   <span class='comment'>#Creates Variables for 3 week date range activities API call
 </span>  <span class='ivar'>@currentDate</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%m-%d-%Y</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_threeWeeks'>threeWeeks</span> <span class='op'>=</span> <span class='const'>Date</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%d-%m-&amp;Y</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span> 
-  <span class='id identifier rubyid_threeWeeks'>threeWeeks</span> <span class='op'>+=</span> <span class='int'>21</span>
-  <span class='ivar'>@threeWeeks</span> <span class='op'>=</span> <span class='id identifier rubyid_threeWeeks'>threeWeeks</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%m-%d-%Y</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> 
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Userkeyauth </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='ivar'>@apikey</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span><span class='rparen'>)</span><span class='comma'>,</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
@@ -537,9 +528,6 @@
       <span class='rbrace'>}</span><span class='comma'>,</span>
       <span class='lbrace'>{</span>
          <span class='label'>Field:</span> <span class='int'>4</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@currentDate</span>
-      <span class='rbrace'>}</span><span class='comma'>,</span>
-      <span class='lbrace'>{</span>
-         <span class='label'>Field:</span> <span class='int'>5</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@threeWeeks</span>
       <span class='rbrace'>}</span>
     <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
     <span class='rparen'>)</span>
@@ -941,7 +929,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 26 15:42:19 2017 by
+  Generated on Tue Oct  3 15:54:56 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

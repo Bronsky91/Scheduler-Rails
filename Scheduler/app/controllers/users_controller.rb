@@ -105,9 +105,6 @@ class UsersController < ApplicationController
     gon.userkey = @userName.userkey
     #Creates Variables for 3 week date range activities API call
     @currentDate = Time.now.strftime("%m-%d-%Y")
-    threeWeeks = Date.parse(Time.now.strftime("%d-%m-&Y")) 
-    threeWeeks += 21
-    @threeWeeks = threeWeeks.strftime("%m-%d-%Y")
     headers = { 
       "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(@apikey+":"+@userName.userkey),
       "Content-Type" => "application/json", "Accept" => "application/json"
@@ -122,9 +119,6 @@ class UsersController < ApplicationController
         },
         {
            Field: 4, Operand: 1, Value: @currentDate
-        },
-        {
-           Field: 5, Operand: 2, Value: @threeWeeks
         }
       ].to_json
       )

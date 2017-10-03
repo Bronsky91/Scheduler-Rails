@@ -5,7 +5,7 @@ class User < ApplicationRecord
                     format: {
                         with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9\.-]+\.[A-Za-z]+\Z/
                     }
-
+                    
     before_save :downcase_email
 
     def downcase_email
