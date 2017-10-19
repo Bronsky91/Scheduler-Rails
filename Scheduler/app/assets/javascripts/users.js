@@ -212,7 +212,6 @@ $(document).ready(function () {
       allDayDates.push(fullTimeSlots[0][i])
     }
   }
-  console.log(fullTimeSlots);
   // Unavailable date function
   function unavailable(date) {
     dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -263,7 +262,6 @@ $(document).ready(function () {
             }
           }
         }
-        console.log(timeSlotButton);
         // Hides timeslots if conflicts in Redtail occurs
         for (j = 0; j < gon.timeSlotStart.length; j++) {
           for (i = 0; i < calActObj.Activities.length; i++) {
@@ -316,7 +314,6 @@ $(document).ready(function () {
                           },
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                           success: function (actData) {
-                            console.log(actData);
                             alert("Appointment Scheduled!");
                             // Clears Subject and Details boxess
                             $("#subject").val('');
@@ -344,7 +341,6 @@ $(document).ready(function () {
                           },
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData, "ClientID": clientID }),
                           success: function (actData) {
-                            console.log(actData);
                             alert("Appointment Scheduled!");
                             // Clears Subject and Details boxess
                             $("#subject").val('');
