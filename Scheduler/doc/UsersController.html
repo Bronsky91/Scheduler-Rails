@@ -287,6 +287,30 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#slot-instance_method" title="#slot (instance method)">#<strong>slot</strong>(parsed)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Method to show what Timeslots get viewed on Datepicker.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#update-instance_method" title="#update (instance method)">#<strong>update</strong>  &#x21d2; Object </a>
     
 
@@ -361,8 +385,6 @@
       <pre class="lines">
 
 
-59
-60
 61
 62
 63
@@ -375,10 +397,12 @@
 70
 71
 72
-73</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_user_params'>user_params</span><span class='rparen'>)</span>
@@ -415,8 +439,6 @@
       <pre class="lines">
 
 
-99
-100
 101
 102
 103
@@ -482,114 +504,76 @@
 163
 164
 165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184</pre>
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_datepicker'>datepicker</span>
-  <span class='comment'>#for requester to browse to datepicker
-</span>  <span class='ivar'>@userName</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_by_username'>find_by_username</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='ivar'>@apikey</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1424B19F-5111-4B39-97A9-953EEEC81A18</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_apikey'>apikey</span> <span class='op'>=</span> <span class='ivar'>@apikey</span>
-  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userID'>userID</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
-  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span>
-  <span class='comment'>#Creates Variables for 3 week date range activities API call
-</span>  <span class='ivar'>@currentDate</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%m-%d-%Y</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> 
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Userkeyauth </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='ivar'>@apikey</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
-        <span class='rbrace'>}</span> 
-  <span class='comment'># API call to gather all Redtail Activities in the next 3 weeks
-</span>  <span class='ivar'>@calData</span> <span class='op'>=</span> <span class='const'>HTTParty</span><span class='period'>.</span><span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
-    <span class='symbol'>:headers</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span>
-    <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
-      <span class='lbrace'>{</span>  
-         <span class='label'>Field:</span> <span class='int'>21</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
-      <span class='rbrace'>}</span><span class='comma'>,</span>
-      <span class='lbrace'>{</span>
-         <span class='label'>Field:</span> <span class='int'>4</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@currentDate</span>
-      <span class='rbrace'>}</span>
-    <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
-    <span class='rparen'>)</span>
-  <span class='comment'># Passes variable to Javascript
-</span>  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_calData'>calData</span> <span class='op'>=</span> <span class='ivar'>@calData</span>
+    <span class='comment'>#for requester to browse to datepicker
+</span>    <span class='ivar'>@userName</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_by_username'>find_by_username</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='ivar'>@apikey</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1424B19F-5111-4B39-97A9-953EEEC81A18</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_apikey'>apikey</span> <span class='op'>=</span> <span class='ivar'>@apikey</span>
+    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userID'>userID</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
+    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span>
+    <span class='comment'>#Creates Variables for 3 week date range activities API call
+</span>    <span class='ivar'>@currentDate</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_strftime'>strftime</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%m-%d-%Y</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_headers'>headers</span> <span class='op'>=</span> <span class='lbrace'>{</span> 
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Userkeyauth </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='ivar'>@apikey</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Accept</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
+          <span class='rbrace'>}</span> 
+    <span class='comment'># API call to gather all Redtail Activities in the next 3 weeks
+</span>    <span class='ivar'>@calData</span> <span class='op'>=</span> <span class='const'>HTTParty</span><span class='period'>.</span><span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
+      <span class='symbol'>:headers</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_headers'>headers</span><span class='comma'>,</span>
+      <span class='symbol'>:body</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span>
+        <span class='lbrace'>{</span>  
+           <span class='label'>Field:</span> <span class='int'>21</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>0</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
+        <span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='lbrace'>{</span>
+           <span class='label'>Field:</span> <span class='int'>4</span><span class='comma'>,</span> <span class='label'>Operand:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>Value:</span> <span class='ivar'>@currentDate</span>
+        <span class='rbrace'>}</span>
+      <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+      <span class='rparen'>)</span>
+    <span class='comment'># Passes variable to Javascript
+</span>    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_calData'>calData</span> <span class='op'>=</span> <span class='ivar'>@calData</span>
+    <span class='comment'># Variables to select which timeslot gets selected to block out conflicts
+</span>    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='ivar'>@timeslot_parsed</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span><span class='rparen'>)</span>
+    <span class='ivar'>@timeslot_parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> 
+      <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>start</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>end</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cutOff</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
 
-  <span class='ivar'>@timeslot</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span>
-  <span class='comment'># Switch to select when Timeslot get viewed on Datepicker
-</span>  <span class='kw'>case</span> <span class='ivar'>@timeslot</span>
-    <span class='kw'>when</span> <span class='int'>1</span> 
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slot'>slot</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;tr&gt;
+    <span class='comment'># Method to show what Timeslots get viewed on Datepicker
+</span>    <span class='kw'>def</span> <span class='id identifier rubyid_slot'>slot</span><span class='lparen'>(</span><span class='id identifier rubyid_parsed'>parsed</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_html'>html</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <span class='id identifier rubyid_idArray'>idArray</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+      <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_parsed'>parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_array'>array</span><span class='op'>|</span>
+        <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>start</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>1200</span><span class='rparen'>)</span>
+          <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>=</span> <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>4</span><span class='rbracket'>]</span> 
+         <span class='kw'>else</span>
+          <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>=</span> <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>3</span><span class='rbracket'>]</span>
+         <span class='kw'>end</span>
+        <span class='id identifier rubyid_idArray'>idArray</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='rparen'>)</span>
+       <span class='id identifier rubyid_html'>html</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;tr&gt;
         &lt;td colspan=&quot;8&quot;&gt;
-          &lt;div&gt; 
-              &lt;button id=&quot;first&quot; value=&quot;08:00 am&quot; class=&quot;timeSlot&quot;&gt;8:00 am – 9:00 am &lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;middle&quot; value=&quot;11:00&quot; class=&quot;timeSlot&quot;&gt;11:00 am – 12:00 pm&lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;last&quot; value=&quot;14:00&quot; class=&quot;timeSlot&quot;&gt;2:00 pm – 3:00 pm&lt;/button&gt;
-          &lt;/div&gt;
-          &lt;/td&gt;
-           &lt;/tr&gt;</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>when</span> <span class='int'>2</span>
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slot'>slot</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;tr&gt;
-       &lt;td colspan=&quot;8&quot;&gt;
-          &lt;div&gt; 
-              &lt;button id=&quot;first&quot; value=&quot;09:00 am&quot; class=&quot;timeSlot&quot;&gt;9:00 am – 10:00 am &lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;middle&quot; value=&quot;12:00&quot; class=&quot;timeSlot&quot;&gt;12:00 pm – 1:00 pm&lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;last&quot; value=&quot;15:00&quot; class=&quot;timeSlot&quot;&gt;3:00 pm – 4:00 pm&lt;/button&gt;
-          &lt;/div&gt;
+        &lt;div&gt; &lt;button value=</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> class=&quot;timeSlot&quot;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>id=</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_idArray'>idArray</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span>  <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>+</span>  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> &lt;/button&gt; 
+        &lt;/div&gt;
         &lt;/td&gt;
         &lt;/tr&gt;</span><span class='tstring_end'>&#39;</span></span>
-    <span class='kw'>when</span> <span class='int'>3</span>
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slot'>slot</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;tr&gt;
-      &lt;td colspan=&quot;8&quot;&gt;
-          &lt;div&gt; 
-              &lt;button id=&quot;first&quot; value=&quot;10:00 am&quot; class=&quot;timeSlot&quot;&gt;10:00 am – 11:00 am &lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;middle&quot; value=&quot;13:00&quot; class=&quot;timeSlot&quot;&gt;1:00 pm – 2:00 pm&lt;/button&gt;
-          &lt;/div&gt;
-              &lt;button id=&quot;last&quot; value=&quot;16:00&quot; class=&quot;timeSlot&quot;&gt;4:00 pm – 5:00 pm&lt;/button&gt;
-          &lt;/div&gt;
-        &lt;/td&gt;
-      &lt;/tr&gt;</span><span class='tstring_end'>&#39;</span></span>
-  <span class='kw'>end</span>
-  <span class='comment'># Switch to select which timeslot gets selected to block out conflicts
-</span>  <span class='kw'>case</span> <span class='ivar'>@timeslot</span>
-    <span class='kw'>when</span> <span class='int'>1</span>
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>800</span><span class='comma'>,</span> <span class='int'>1100</span><span class='comma'>,</span> <span class='int'>1400</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>900</span><span class='comma'>,</span> <span class='int'>1200</span><span class='comma'>,</span> <span class='int'>1500</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>730</span><span class='comma'>,</span> <span class='int'>1030</span><span class='comma'>,</span> <span class='int'>1330</span><span class='rbracket'>]</span>
-    <span class='kw'>when</span> <span class='int'>2</span>
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>900</span><span class='comma'>,</span> <span class='int'>1200</span><span class='comma'>,</span> <span class='int'>1500</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1000</span><span class='comma'>,</span> <span class='int'>1300</span><span class='comma'>,</span> <span class='int'>1600</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>830</span><span class='comma'>,</span> <span class='int'>1130</span><span class='comma'>,</span> <span class='int'>1430</span><span class='rbracket'>]</span>
-    <span class='kw'>when</span> <span class='int'>3</span>
-      <span class='kw'>then</span> <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStart'>timeSlotStart</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1000</span><span class='comma'>,</span> <span class='int'>1300</span><span class='comma'>,</span> <span class='int'>1600</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotEnd'>timeSlotEnd</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>1100</span><span class='comma'>,</span> <span class='int'>1400</span><span class='comma'>,</span> <span class='int'>1700</span><span class='rbracket'>]</span>
-           <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeSlotStartCurrent'>timeSlotStartCurrent</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='int'>930</span><span class='comma'>,</span> <span class='int'>1230</span><span class='comma'>,</span> <span class='int'>1530</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-
+        <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>+</span> <span class='int'>1</span>
+      <span class='kw'>end</span>
+     <span class='kw'>return</span> <span class='id identifier rubyid_html'>html</span>
+    <span class='kw'>end</span>
+  <span class='comment'>#Javascript variables
+</span>  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slot'>slot</span> <span class='op'>=</span> <span class='id identifier rubyid_slot'>slot</span><span class='lparen'>(</span><span class='ivar'>@timeslot_parsed</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slotLength'>slotLength</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_slot_length'>slot_length</span>
+  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_numOfSlots'>numOfSlots</span> <span class='op'>=</span> <span class='ivar'>@timeslot_parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -622,16 +606,16 @@
       <pre class="lines">
 
 
-91
-92
 93
 94
 95
 96
-97</pre>
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -671,11 +655,11 @@
       <pre class="lines">
 
 
-54
-55</pre>
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
@@ -710,12 +694,12 @@
       <pre class="lines">
 
 
-8
 9
-10</pre>
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index'>index</span>
   <span class='ivar'>@users</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_all'>all</span>
@@ -751,12 +735,12 @@
       <pre class="lines">
 
 
-49
-50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -792,7 +776,6 @@
       <pre class="lines">
 
 
-14
 15
 16
 17
@@ -824,14 +807,14 @@
 43
 44
 45
-46</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
-  <span class='comment'># Sets timeslot to Database after submission
-</span>  <span class='ivar'>@timeslot</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_set_user'>set_user</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span>
   <span class='comment'># Redtail given API key
 </span>  <span class='ivar'>@apikey</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1424B19F-5111-4B39-97A9-953EEEC81A18</span><span class='tstring_end'>&#39;</span></span>
   <span class='comment'># Passes API key to JS file
@@ -845,22 +828,102 @@
        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span>  <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Basic </span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='ivar'>@apikey</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='ivar'>@reduser</span><span class='op'>+</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:</span><span class='tstring_end'>&quot;</span></span><span class='op'>+</span><span class='ivar'>@redpass</span><span class='rparen'>)</span><span class='comma'>,</span>
        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>application/json</span><span class='tstring_end'>&quot;</span></span>
        <span class='rbrace'>}</span> 
-     <span class='ivar'>@response</span> <span class='op'>=</span> <span class='const'>HTTParty</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span>
+     <span class='ivar'>@auth</span> <span class='op'>=</span> <span class='const'>HTTParty</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span>
         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> 
         <span class='symbol'>:headers</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_headers'>headers</span><span class='rparen'>)</span>
         <span class='comment'># Message that will show in View if API auth failed
-</span>      <span class='kw'>if</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Success</span><span class='tstring_end'>&#39;</span></span>
+</span>      <span class='kw'>if</span> <span class='ivar'>@auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Message</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Success</span><span class='tstring_end'>&#39;</span></span>
         <span class='id identifier rubyid_flash'>flash</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='lbracket'>[</span><span class='symbol'>:error</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Invalid Redtail login, try again</span><span class='tstring_end'>&quot;</span></span>
         <span class='id identifier rubyid_render'>render</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span>
       <span class='kw'>end</span>
+      
       <span class='comment'># Saves RedtailID and UserKey to Database
-</span>      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserID</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@response</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+</span>      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserID</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+      <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>UserKey</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
       <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_save!'>save!</span>
   <span class='kw'>end</span>
 <span class='comment'># Passes RedtailID to JS file
 </span><span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
+<span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span>
+<span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slotLength'>slotLength</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_slot_length'>slot_length</span>
+<span class='ivar'>@dataValue</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:data_value</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="slot-instance_method">
+  
+    #<strong>slot</strong>(parsed)  &#x21d2; <tt>Object</tt> 
+  
 
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Method to show what Timeslots get viewed on Datepicker</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_slot'>slot</span><span class='lparen'>(</span><span class='id identifier rubyid_parsed'>parsed</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_html'>html</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_idArray'>idArray</span> <span class='op'>=</span> <span class='const'>Array</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_parsed'>parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_array'>array</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='lparen'>(</span><span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>data</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>start</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;=</span> <span class='int'>1200</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>=</span> <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>4</span><span class='rbracket'>]</span> 
+     <span class='kw'>else</span>
+      <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>=</span> <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='int'>3</span><span class='rbracket'>]</span>
+     <span class='kw'>end</span>
+    <span class='id identifier rubyid_idArray'>idArray</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_i'>i</span><span class='rparen'>)</span>
+   <span class='id identifier rubyid_html'>html</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&lt;tr&gt;
+    &lt;td colspan=&quot;8&quot;&gt;
+    &lt;div&gt; &lt;button value=</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_butVal'>butVal</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> class=&quot;timeSlot&quot;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>id=</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span> <span class='id identifier rubyid_idArray'>idArray</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&gt;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>+</span>  <span class='id identifier rubyid_array'>array</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>+</span>  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> &lt;/button&gt; 
+    &lt;/div&gt;
+    &lt;/td&gt;
+    &lt;/tr&gt;</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_i'>i</span> <span class='op'>=</span> <span class='id identifier rubyid_i'>i</span> <span class='op'>+</span> <span class='int'>1</span>
+  <span class='kw'>end</span>
+ <span class='kw'>return</span> <span class='id identifier rubyid_html'>html</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -893,8 +956,6 @@
       <pre class="lines">
 
 
-77
-78
 79
 80
 81
@@ -903,10 +964,12 @@
 84
 85
 86
-87</pre>
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
@@ -929,7 +992,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Oct  3 15:54:56 2017 by
+  Generated on Thu Oct 19 15:55:15 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

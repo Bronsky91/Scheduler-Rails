@@ -35,3 +35,22 @@
     color: #468847;
     text-align: left;
  }
+ .slotbox {
+     display: inline;
+     margin-right: 5px;
+     padding: 5px;
+     background-color: #c9d5ec;
+     box-shadow: 2px 2px 1px black;
+     border-radius: 5px;
+ }
+ .remove {
+    background-color: Transparent;
+    background-repeat:no-repeat;
+    border: none;
+    cursor:pointer;
+    overflow: hidden;
+    outline:none;
+ }
+ .remove:hover{
+    color: red;
+ }

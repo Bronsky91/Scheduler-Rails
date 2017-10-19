@@ -7,6 +7,111 @@ $(document).ready(function () {
     alert('Unable to copy');
   });
 
+  // API call to get Redtail Calendar preferences
+  $.ajax
+    ({
+      type: "GET",
+      url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/settings/calendar",
+      contentType: "application/json",
+      headers: {
+        "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+      },
+      success: function (calPref) {
+        // Enables Timepicker plugin
+        $('.timepicker').timepicker({
+          timeFormat: 'h:mm p',
+          interval: 15,
+          minTime: calPref.StartOfDay.toString(),
+          maxTime: calPref.EndOfDay.toString(),
+          dropdown: true,
+          dynamic: false,
+          defaultTime: calPref.StartOfDay.toString(),
+          scrollbar: true
+        });
+      }, error: function (XMLHttpRequest, textStatus, errorThrown)
+      { alert(errorThrown); }
+    });
+
+  // Function that cleans data for selected Timeslots divs that accepts the timepicker value and the timeslot length 
+  function selectedSlot(timepickerVal, slotLength) {
+    slotArray = timepickerVal.split(/[:\s]/g);
+    for (i = 0; i < 2; i++) {
+      slotArray[i] = Number(slotArray[i]);
+    }
+    if (slotArray[2] == 'PM' && slotArray[0] != 12) {
+      slotArray[0] = slotArray[0] + 12;
+    }
+    msum = slotArray[1] + slotLength;
+    mmod = msum % 60;
+    hsum = slotArray[0];
+    mshow = mmod;
+    hshow = hsum;
+    if (msum >= 60) {
+      hsum += 1;
+      hshow = hsum
+    }
+    meridiem = 'AM';
+    if (hsum >= 12) {
+      meridiem = 'PM'
+    }
+    if (mmod == 0) {
+      mshow = '00';
+    }
+    if (hsum > 12) {
+      hshow = hsum - 12;
+    }
+    hCutOff = slotArray[0];
+    mCutOff = slotArray[1] - 30;
+    if (mCutOff < 0) {
+      if (slotArray[0] == 0) {
+        mCutOff += 30
+      } else {
+        mCutOff = 60 + mCutOff
+        hCutOff -= 1
+      }
+    }
+    start = slotArray[0] * 100;
+    start = start + slotArray[1];
+    end = hsum * 100;
+    end = end + mmod;
+    cutOff = hCutOff * 100;
+    cutOff = cutOff + mCutOff;
+
+    selectedData = {
+      show: timepickerVal.replace(/\s/g, '') + "-" + hshow + ':' + mshow + meridiem,
+      data: {      
+        start: start,
+        end: end,
+        cutOff: cutOff
+      }
+    }
+    return selectedData
+  }
+
+  $(".add").click(function () {
+    timepickerVal = $('.timepicker').val();
+    slotData = JSON.stringify(selectedSlot(timepickerVal, gon.slotLength));
+    $(".slottable").append("<div class=\"slotbox\" data-value=" + slotData + ">" + selectedSlot(timepickerVal, gon.slotLength).show + "<button class=\"remove\">x</button></div>")
+    return false;
+  });
+
+  $('.slottable').on('click', '.remove', function () {
+    $(this).closest('.slotbox').remove();
+    return false;
+  });
+
+$(".apply").click(function () {
+  dataValue = []
+  $('.slotbox').each(function () {
+    dataValue.push($(this).data('value'));
+  })
+  dataObject = {
+    value: dataValue
+  }
+  dataObject = JSON.stringify(dataObject);
+  $('.hiddenValue').val(dataObject);
+});
+
   // Creates variable for dates array
   var datesArray = [];
   var timesEnd = [];
@@ -96,10 +201,11 @@ $(document).ready(function () {
   var fullTimeSlots = count(fullTimeSlots);
   // Loop that checks the fullTimeSlots correlating arrays if 3 timeslots have conflicts for the day, key is pushed into allDayDates array
   for (i = 0; i < fullTimeSlots[0].length; i++) {
-    if (fullTimeSlots[1][i] == 3) {
+    if (fullTimeSlots[1][i] == gon.numOfSlots) {
       allDayDates.push(fullTimeSlots[0][i])
     }
   }
+  console.log(fullTimeSlots);
   // Unavailable date function
   function unavailable(date) {
     dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
@@ -139,7 +245,10 @@ $(document).ready(function () {
         todayT = parseFloat(todayT);
         todayT = Math.round(todayT * 100);
         // Hides timeslots if current time as already past and conflicts with timeslot
-        var timeSlotButton = ['#first', '#middle', '#last'];
+        var timeSlotButton = [];
+        for (i = 0; i < gon.numOfSlots; i++){
+          timeSlotButton.push('#'+i);
+        }
         for (j = 0; j < gon.timeSlotStartCurrent.length; j++) {
           if ($('#datepicker').val() == today) {
             if (todayT >= gon.timeSlotStartCurrent[j]) {
@@ -147,6 +256,7 @@ $(document).ready(function () {
             }
           }
         }
+        console.log(timeSlotButton);
         // Hides timeslots if conflicts in Redtail occurs
         for (j = 0; j < gon.timeSlotStart.length; j++) {
           for (i = 0; i < calActObj.Activities.length; i++) {
@@ -164,13 +274,17 @@ $(document).ready(function () {
           // Creates variables from chosen date/time
           var selectedTime = $(this).val();
           var selectedDate = moment($('#datepicker').val() + ' ' + selectedTime, "D-M-YYYY HH mm");
-          var selectedDateOneHour = moment(selectedDate).add(1, 'h');
+          if (gon.slotLength == 60) {
+            var selectedDateFuture = moment(selectedDate).add(1, 'h');
+          } else {
+            var selectedDateFuture = moment(selectedDate).add(gon.slotLength, 'm');
+          }
           document.getElementById("scheduleAct").onclick = function () {
             var emailField = $("#email").val();
             var subjectData = $("#subject").val();
             var detailsData = $("#details").val();
             var unixTime = selectedDate.valueOf();
-            var unixTimeHour = selectedDateOneHour.valueOf();
+            var unixTimeHour = selectedDateFuture.valueOf();
             $.ajax
               ({
                 type: "POST",
@@ -182,7 +296,7 @@ $(document).ready(function () {
                 data: JSON.stringify([{ "Field": 16, "Operand": 0, "Value": emailField }]),
                 success: function (clientData) {
                   if (clientData.Contacts == null) {
-                    c = confirm("No Client found with email: " + emailField + ", Schedule anyway?");
+                    c = confirm("Schedule Appointment?");
                     if (c == true) {
                       // PUT call to create activity in Redtail
                       $.ajax
@@ -210,7 +324,7 @@ $(document).ready(function () {
                     }
                   } else {
                     var clientID = clientData.Contacts[0].ClientID;
-                    var cf = confirm("Client Found: " + clientData.Contacts[0].FirstName + " " + clientData.Contacts[0].LastName + ". Schedule appointment?");
+                    var cf = confirm("Schedule appointment?");
                     if (cf == true) {
                       // PUT call to create activity in Redtail
                       $.ajax

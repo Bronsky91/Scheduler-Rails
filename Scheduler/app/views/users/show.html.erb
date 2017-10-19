@@ -7,57 +7,69 @@
     User Settings
   </h1>
   <hr>
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
-<%# Form to Select Timeslot on User page %>
-<%= form_for(@user) do |f| %>
-<p>
-  <% if @user.timeslot == nil %>
-    <strong> Current Timeslot: "No Timeslot Selected" </strong>
-  <% else %>
-  <%# Shows current timeslot selected and saved in Database %>
-    <strong>Current Timeslot:</strong>
-    <%= get_start_end_time_slots(@timeslot)  %>
-  <% end %>
-  <br>
-<strong>Update/Choose:</strong>
-<%# Ability to change timeslots, integers represent Switch in helper %>
-   <%= f.select(:timeslot) do %>
-    <% [['8am, 11am, 2pm', 1], ['9am, 12pm, 3pm', 2],['10am, 1pm, 4pm', 3]].each do |c| -%>
-    <%= content_tag(:option, c.first, value: c.last) %>
-  <% end %>
-  <div class="actions">
-     <%= f.submit "Update Timeslot" %>
+  <p>
+    <%# Logic to show if Redtail is integrated ie. if a Redtail ID is present in the database.. %>
+    <%# ..and if authentication went through %>
+  <strong>Integrated with Redtail:</strong>
+    <% if [nil, 0].include? @user.redtailid %>
+        No, log in below to integrate
+      <% else @user.redtailid %>
+         Yes 
     <% end %>
-<% end %>
-</p>
-<p style="display:inline;">
-  <%# Shows link that was created in Controller for user which goes to Datepicker %>
-  <strong>Datepicker Link:</strong>
-  <p style="display:inline;" id ="linkshare"><%= @user.link %></p>
-  <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
-</p>
-<p>
-  <%# Logic to show if Redtail is integrated ie. if a Redtail ID is present in the database.. %>
-  <%# and if authentication went through %>
-<strong>Integrated with Redtail:</strong>
+  </p>
   <% if [nil, 0].include? @user.redtailid %>
-      No, log in below to integrate
-    <% else @user.redtailid %>
-       Yes 
+    <%# Redtail Login form, saves Redtail username and password to variables in controller %>
+    <%= form_tag showme_path, :method => :post, id: 'integrate' do %>
+      <%= label_tag(:reduser, "Redtail Username:") %>
+      <%= text_field_tag(:reduser) %>
+      <br>
+      <%= label_tag(:redpass, "Redtail Password:") %>
+      <%= password_field_tag(:redpass) %>
+      <%= submit_tag("Integrate",class: "btn btn-success") %>
+    <% end %>
   <% end %>
-</p>
-<% if [nil, 0].include? @user.redtailid %>
-  <%# Redtail Login form, saves Redtail username and password to variables in controller %>
-  <%= form_tag showme_path, :method => :post, id: 'integrate' do %>
-    <%= label_tag(:reduser, "Redtail Username:") %>
-    <%= text_field_tag(:reduser) %>
+  <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+  </p>
+  <% if [nil, 0].include? @user.redtailid %>
+  <p>Once Redtail Integration is successful more options will become available</p>
+  <% else %>
+  <p style="display:inline;">
+    <%# Shows link that was created in Controller for user which goes to Datepicker %>
+    <strong>Datepicker Link:</strong>
+    <p style="display:inline;" id ="linkshare"><%= @user.link %></p>
+    <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
+  </p>
+  <p>
+      <%= @dataValue.inspect %>
+    <%# Shows current timeslot selected and saved in Database from helper method%>
+     <strong>Current Selectable Timeslots:</strong>
+     <% if [nil, ""].include? @user.timeslot %>
+     No Timeslots Set
+     <% else %>
+      <div class="slottable">
+        <%= show_timeslots_selected(@user.timeslot) %>
+      </div>
+      <% timeslot_parsed = JSON.parse(@user.timeslot) %>
+  </p>
+    <% end %>
     <br>
-    <%= label_tag(:redpass, "Redtail Password:") %>
-    <%= password_field_tag(:redpass) %>
-    <%= submit_tag("Integrate",class: "btn btn-success") %>
+  <%# Form to Select Timeslot on User page %>
+  <%= form_for @user do |f| %>
+    <strong>Update/Choose length of all Slots:</strong>
+    <%# Ability to change timeslot length %>
+    <%= f.select(:slot_length, options_for_select(timeslotLength(), @user.slot_length)) %>
+    <br>
+    <% if @user.slot_length != nil %>
+    <strong>Update/Add Selectable Start times</strong>
+    <%# Add selectable timeslots %>
+    <%= timepicker() %>
+    <button class="add">Add</button>
+    <% end %>
+    <br>
+    <%= f.hidden_field :timeslot, :value => @dataValue, :class => 'hiddenValue' %>
+   <%= f.submit "Apply Changes", :class => 'apply' %>
   <% end %>
 <% end %>
 </div>

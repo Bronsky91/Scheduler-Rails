@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :logged_in_user, only: [:show]
   require 'base64'
+  require 'json'
   # GET /users
   # GET /users.json
 
@@ -12,8 +13,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    # Sets timeslot to Database after submission
-    @timeslot = User.find(set_user).timeslot
     # Redtail given API key
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     # Passes API key to JS file
@@ -27,22 +26,25 @@ class UsersController < ApplicationController
          "Authorization"  => "Basic "+ Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
          "Content-Type" => "application/json"
          } 
-       @response = HTTParty.get(
+       @auth = HTTParty.get(
           "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
           :headers => headers)
           # Message that will show in View if API auth failed
-        if @response['Message'] != 'Success'
+        if @auth['Message'] != 'Success'
           flash.now[:error] = "Invalid Redtail login, try again"
           render 'show'
         end
+        
         # Saves RedtailID and UserKey to Database
-        @user.redtailid = @response['UserID']
-        @user.userkey = @response['UserKey'].to_s
+        @user.redtailid = @auth['UserID']
+        @user.userkey = @auth['UserKey'].to_s
         @user.save!
     end
   # Passes RedtailID to JS file
   gon.redtailid = @user.redtailid
-
+  gon.userkey = @user.userkey
+  gon.slotLength = @user.slot_length
+  @dataValue = params[:data_value]
   end
 
   # GET /users/new
@@ -124,65 +126,44 @@ class UsersController < ApplicationController
       )
     # Passes variable to Javascript
     gon.calData = @calData
+    # Variables to select which timeslot gets selected to block out conflicts
+    gon.timeSlotStart = Array.new
+    gon.timeSlotEnd = Array.new
+    gon.timeSlotStartCurrent = Array.new
+    @timeslot_parsed = JSON.parse(@userName.timeslot)
+    @timeslot_parsed['value'].each do |value| 
+      gon.timeSlotStart.push(value['data']['start'])
+      gon.timeSlotEnd.push(value['data']['end'])
+      gon.timeSlotStartCurrent.push(value['data']['cutOff'])
+    end
 
-    @timeslot = @userName.timeslot
-    # Switch to select when Timeslot get viewed on Datepicker
-    case @timeslot
-      when 1 
-        then gon.slot = '<tr>
-          <td colspan="8">
-            <div> 
-                <button id="first" value="08:00 am" class="timeSlot">8:00 am – 9:00 am </button>
-            </div>
-                <button id="middle" value="11:00" class="timeSlot">11:00 am – 12:00 pm</button>
-            </div>
-                <button id="last" value="14:00" class="timeSlot">2:00 pm – 3:00 pm</button>
-            </div>
-            </td>
-             </tr>'
-      when 2
-        then gon.slot = '<tr>
-         <td colspan="8">
-            <div> 
-                <button id="first" value="09:00 am" class="timeSlot">9:00 am – 10:00 am </button>
-            </div>
-                <button id="middle" value="12:00" class="timeSlot">12:00 pm – 1:00 pm</button>
-            </div>
-                <button id="last" value="15:00" class="timeSlot">3:00 pm – 4:00 pm</button>
-            </div>
-          </td>
-          </tr>'
-      when 3
-        then gon.slot = '<tr>
+    # Method to show what Timeslots get viewed on Datepicker
+    def slot(parsed)
+      html = String.new
+      idArray = Array.new
+      i = 0
+      parsed['value'].each do |array|
+        if (array['data']['start'] >= 1200)
+          butVal = array['show'][0..4] 
+         else
+          butVal = array['show'][0..3]
+         end
+        idArray.push(i)
+       html << '<tr>
         <td colspan="8">
-            <div> 
-                <button id="first" value="10:00 am" class="timeSlot">10:00 am – 11:00 am </button>
-            </div>
-                <button id="middle" value="13:00" class="timeSlot">1:00 pm – 2:00 pm</button>
-            </div>
-                <button id="last" value="16:00" class="timeSlot">4:00 pm – 5:00 pm</button>
-            </div>
-          </td>
+        <div> <button value=' + butVal + ' class="timeSlot"' + 'id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
+        </div>
+        </td>
         </tr>'
+        i = i + 1
+      end
+     return html
     end
-    # Switch to select which timeslot gets selected to block out conflicts
-    case @timeslot
-      when 1
-        then gon.timeSlotStart = [800, 1100, 1400]
-             gon.timeSlotEnd = [900, 1200, 1500]
-             gon.timeSlotStartCurrent = [730, 1030, 1330]
-      when 2
-        then gon.timeSlotStart = [900, 1200, 1500]
-             gon.timeSlotEnd = [1000, 1300, 1600]
-             gon.timeSlotStartCurrent = [830, 1130, 1430]
-      when 3
-        then gon.timeSlotStart = [1000, 1300, 1600]
-             gon.timeSlotEnd = [1100, 1400, 1700]
-             gon.timeSlotStartCurrent = [930, 1230, 1530]
-    end
-
-  end
-
+  #Javascript variables
+  gon.slot = slot(@timeslot_parsed)
+  gon.slotLength = @userName.slot_length
+  gon.numOfSlots = @timeslot_parsed['value'].length
+end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -191,7 +172,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :link, :userkey)
+      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :slot_length, :userkey)
     end
 
     def logged_in_user
