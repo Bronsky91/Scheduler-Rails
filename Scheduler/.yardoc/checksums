@@ -1,5 +1,5 @@
 app/models/user.rb 1dfc0211a586501b3822cf5d766dc0bb64abdd34
-app/helpers/users_helper.rb 0bafc0e1a01dd597189a24ac79814c801484bc8f
+app/helpers/users_helper.rb 62ac23d22ccf3eb8046fda138e5592c4ea1e9712
 app/jobs/application_job.rb 9a24c3e30cfb517943d8774df4695ba794bfd69d
 app/helpers/sessions_helper.rb 47bfd343f5d373a393b7ae39b52c96b8b11c361d
 app/models/application_record.rb b40193a5447806d689d114a0f55f392ae7c199e4

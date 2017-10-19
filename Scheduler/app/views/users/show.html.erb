@@ -42,7 +42,6 @@
     <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
   </p>
   <p>
-      <%= @dataValue.inspect %>
     <%# Shows current timeslot selected and saved in Database from helper method%>
      <strong>Current Selectable Timeslots:</strong>
      <% if [nil, ""].include? @user.timeslot %>

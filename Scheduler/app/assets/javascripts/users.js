@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     selectedData = {
       show: timepickerVal.replace(/\s/g, '') + "-" + hshow + ':' + mshow + meridiem,
-      data: {      
+      data: {
         start: start,
         end: end,
         cutOff: cutOff
@@ -91,7 +91,13 @@ $(document).ready(function () {
   $(".add").click(function () {
     timepickerVal = $('.timepicker').val();
     slotData = JSON.stringify(selectedSlot(timepickerVal, gon.slotLength));
-    $(".slottable").append("<div class=\"slotbox\" data-value=" + slotData + ">" + selectedSlot(timepickerVal, gon.slotLength).show + "<button class=\"remove\">x</button></div>")
+    orderData = JSON.stringify(selectedSlot(timepickerVal, gon.slotLength).data.start);
+    $(".slottable").append("<div class=\"slotbox\" data-order=" + orderData + " data-value=" + slotData + ">" + selectedSlot(timepickerVal, gon.slotLength).show + "<button class=\"remove\">x</button></div>")
+    // sorts slotboxs in order of start time for proper utilization 
+    $('.slottable').find('.slotbox').sort(function (a, b) {
+      return +a.dataset.order - +b.dataset.order;
+    })
+    .appendTo($('.slottable'));
     return false;
   });
 
@@ -100,17 +106,18 @@ $(document).ready(function () {
     return false;
   });
 
-$(".apply").click(function () {
-  dataValue = []
-  $('.slotbox').each(function () {
-    dataValue.push($(this).data('value'));
-  })
-  dataObject = {
-    value: dataValue
-  }
-  dataObject = JSON.stringify(dataObject);
-  $('.hiddenValue').val(dataObject);
-});
+
+  $(".apply").click(function () {
+    dataValue = []
+    $('.slotbox').each(function () {
+      dataValue.push($(this).data('value'));
+    })
+    dataObject = {
+      value: dataValue
+    }
+    dataObject = JSON.stringify(dataObject);
+    $('.hiddenValue').val(dataObject);
+  });
 
   // Creates variable for dates array
   var datesArray = [];
@@ -246,8 +253,8 @@ $(".apply").click(function () {
         todayT = Math.round(todayT * 100);
         // Hides timeslots if current time as already past and conflicts with timeslot
         var timeSlotButton = [];
-        for (i = 0; i < gon.numOfSlots; i++){
-          timeSlotButton.push('#'+i);
+        for (i = 0; i < gon.numOfSlots; i++) {
+          timeSlotButton.push('#' + i);
         }
         for (j = 0; j < gon.timeSlotStartCurrent.length; j++) {
           if ($('#datepicker').val() == today) {
