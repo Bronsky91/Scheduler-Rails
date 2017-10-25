@@ -385,8 +385,6 @@
       <pre class="lines">
 
 
-61
-62
 63
 64
 65
@@ -399,10 +397,12 @@
 72
 73
 74
-75</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create'>create</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_user_params'>user_params</span><span class='rparen'>)</span>
@@ -439,8 +439,6 @@
       <pre class="lines">
 
 
-101
-102
 103
 104
 105
@@ -504,10 +502,12 @@
 163
 164
 165
-166</pre>
+166
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_datepicker'>datepicker</span>
     <span class='comment'>#for requester to browse to datepicker
@@ -572,8 +572,8 @@
     <span class='kw'>end</span>
   <span class='comment'>#Javascript variables
 </span>  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slot'>slot</span> <span class='op'>=</span> <span class='id identifier rubyid_slot'>slot</span><span class='lparen'>(</span><span class='ivar'>@timeslot_parsed</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slotLength'>slotLength</span> <span class='op'>=</span> <span class='ivar'>@userName</span><span class='period'>.</span><span class='id identifier rubyid_slot_length'>slot_length</span>
   <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_numOfSlots'>numOfSlots</span> <span class='op'>=</span> <span class='ivar'>@timeslot_parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slotLength'>slotLength</span> <span class='op'>=</span> <span class='ivar'>@timeslot_parsed</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>value</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>length</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -606,16 +606,16 @@
       <pre class="lines">
 
 
-93
-94
 95
 96
 97
 98
-99</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span>
   <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -655,11 +655,11 @@
       <pre class="lines">
 
 
-56
-57</pre>
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit'>edit</span>
 <span class='kw'>end</span></pre>
@@ -735,12 +735,12 @@
       <pre class="lines">
 
 
-51
-52
-53</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -809,7 +809,9 @@
 45
 46
 47
-48</pre>
+48
+49
+50</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 15</span>
@@ -845,8 +847,10 @@
 <span class='comment'># Passes RedtailID to JS file
 </span><span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_redtailid'>redtailid</span>
 <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_userkey'>userkey</span>
-<span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_slotLength'>slotLength</span> <span class='op'>=</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_slot_length'>slot_length</span>
 <span class='ivar'>@dataValue</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:data_value</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span> <span class='op'>!=</span> <span class='kw'>nil</span>
+      <span class='ivar'>@timeslot_parsed</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -879,8 +883,6 @@
       <pre class="lines">
 
 
-141
-142
 143
 144
 145
@@ -899,10 +901,12 @@
 158
 159
 160
-161</pre>
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 143</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_slot'>slot</span><span class='lparen'>(</span><span class='id identifier rubyid_parsed'>parsed</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_html'>html</span> <span class='op'>=</span> <span class='const'>String</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -956,8 +960,6 @@
       <pre class="lines">
 
 
-79
-80
 81
 82
 83
@@ -966,10 +968,12 @@
 86
 87
 88
-89</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update'>update</span>
   <span class='id identifier rubyid_respond_to'>respond_to</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_format'>format</span><span class='op'>|</span>
@@ -992,7 +996,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Oct 19 16:42:30 2017 by
+  Generated on Wed Oct 25 14:02:16 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

@@ -54,3 +54,23 @@
  .remove:hover{
     color: red;
  }
+ .slottable {
+     display: grid;
+     grid-template-columns: 120px 120px 120px 120px 120px 120px 120px;
+     grid-gap: 10px;
+     color: #444;
+ }
+ .slotdays {
+    display: grid;
+    grid-row-gap: 10px;
+    background-color: #444;
+    border-radius: 5px;
+    padding: 10px;
+  }
+.day {
+    text-align: center;
+    height: 25px;
+}
+.green {
+    background-color: green;
+}

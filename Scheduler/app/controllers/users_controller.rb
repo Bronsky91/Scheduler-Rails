@@ -43,8 +43,10 @@ class UsersController < ApplicationController
   # Passes RedtailID to JS file
   gon.redtailid = @user.redtailid
   gon.userkey = @user.userkey
-  gon.slotLength = @user.slot_length
   @dataValue = params[:data_value]
+    if @user.timeslot != nil
+        @timeslot_parsed = JSON.parse(@user.timeslot)
+    end
   end
 
   # GET /users/new
@@ -161,8 +163,8 @@ class UsersController < ApplicationController
     end
   #Javascript variables
   gon.slot = slot(@timeslot_parsed)
-  gon.slotLength = @userName.slot_length
   gon.numOfSlots = @timeslot_parsed['value'].length
+  gon.slotLength = @timeslot_parsed['value']['length']
 end
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -172,7 +174,7 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :slot_length, :userkey)
+      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :userkey)
     end
 
     def logged_in_user

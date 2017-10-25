@@ -15,6 +15,12 @@
         No, log in below to integrate
       <% else @user.redtailid %>
          Yes 
+         <br>
+         <%= form_for @user do |f| %>
+         <%= f.hidden_field :redtailid, :value => nil %>
+         <%= f.hidden_field :userkey, :value => nil %>
+         <%= f.submit "Remove Integration" %>
+         <% end %>
     <% end %>
   </p>
   <% if [nil, 0].include? @user.redtailid %>
@@ -43,32 +49,57 @@
   </p>
   <p>
     <%# Shows current timeslot selected and saved in Database from helper method%>
-     <strong>Current Selectable Timeslots:</strong>
-     <% if [nil, ""].include? @user.timeslot %>
-     No Timeslots Set
-     <% else %>
+     <strong>Select Day(s) to add Timeslots:</strong>
       <div class="slottable">
-        <%= show_timeslots_selected(@user.timeslot) %>
+        <div class="slotdays" id="monday">
+            <button class="day" > Monday </button>
+            <%= available_time_slots_for(@user.timeslot, "monday") %>
+        </div>
+        <div class="slotdays" id="tuesday">
+            <button class="day"> Tuesday </button> 
+            <%= available_time_slots_for(@user.timeslot, "tuesday") %>
+        </div>
+        <div class="slotdays" id="wednesday">
+            <button class="day"> Wednesday </button>
+            <%= available_time_slots_for(@user.timeslot, "wednesday") %>
+        </div>
+        <div class="slotdays" id="thursday">
+            <button class="day"> Thursday </button>
+            <%= available_time_slots_for(@user.timeslot, "thursday") %>
+        </div>
+        <div class="slotdays" id="friday">
+            <button class="day"> Friday </button>
+            <%= available_time_slots_for(@user.timeslot, "friday") %>
+        </div>
+        <div class="slotdays" id="saturday">
+            <button class="day"> Saturday </button>
+            <%= available_time_slots_for(@user.timeslot, "saturday") %>
+        </div>
+        <div class="slotdays" id="sunday">
+            <button class="day"> Sunday </button>
+            <%= available_time_slots_for(@user.timeslot, "sunday") %>
+        </div>
       </div>
-      <% timeslot_parsed = JSON.parse(@user.timeslot) %>
   </p>
-    <% end %>
     <br>
   <%# Form to Select Timeslot on User page %>
   <%= form_for @user do |f| %>
-    <strong>Update/Choose length of all Slots:</strong>
+    <strong>Update/Choose length of Slot:</strong>
     <%# Ability to change timeslot length %>
-    <%= f.select(:slot_length, options_for_select(timeslotLength(), @user.slot_length)) %>
+    <select class="slotLength">
+      <option value="15">15 Min</option>
+      <option value="30">30 Min</option>
+      <option value="45">45 Min</option>
+      <option value="60">1 Hour</option>
+    </select>
     <br>
-    <% if @user.slot_length != nil %>
-    <strong>Update/Add Selectable Start times</strong>
+    <strong>Add Selectable Start times</strong>
     <%# Add selectable timeslots %>
     <%= timepicker() %>
     <button class="add">Add</button>
-    <% end %>
-    <br>
     <%= f.hidden_field :timeslot, :value => @dataValue, :class => 'hiddenValue' %>
-   <%= f.submit "Apply Changes", :class => 'apply' %>
+    <br>
+    <%= f.submit "Apply Changes", :class => 'apply' %>
   <% end %>
 <% end %>
 </div>

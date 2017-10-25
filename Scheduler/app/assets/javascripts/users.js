@@ -6,34 +6,40 @@ $(document).ready(function () {
   clipboard.on('error', function () {
     alert('Unable to copy');
   });
+  console.log(gon.redtailid)
+  if (gon.redtailid != null) {
+    // API call to get Redtail Calendar preferences
+    $.ajax
+      ({
+        type: "GET",
+        url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/settings/calendar",
+        contentType: "application/json",
+        headers: {
+          "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+        },
+        success: function (calPref) {
+          // Enables Timepicker plugin
+          $('.timepicker').timepicker({
+            timeFormat: 'h:mm p',
+            interval: 15,
+            minTime: calPref.StartOfDay.toString(),
+            maxTime: calPref.EndOfDay.toString(),
+            dropdown: true,
+            dynamic: false,
+            defaultTime: calPref.StartOfDay.toString(),
+            scrollbar: true
+          });
+        }, error: function (XMLHttpRequest, textStatus, errorThrown)
+        { alert(errorThrown); }
+      });
+  }
 
-  // API call to get Redtail Calendar preferences
-  $.ajax
-    ({
-      type: "GET",
-      url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/settings/calendar",
-      contentType: "application/json",
-      headers: {
-        "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
-      },
-      success: function (calPref) {
-        // Enables Timepicker plugin
-        $('.timepicker').timepicker({
-          timeFormat: 'h:mm p',
-          interval: 15,
-          minTime: calPref.StartOfDay.toString(),
-          maxTime: calPref.EndOfDay.toString(),
-          dropdown: true,
-          dynamic: false,
-          defaultTime: calPref.StartOfDay.toString(),
-          scrollbar: true
-        });
-      }, error: function (XMLHttpRequest, textStatus, errorThrown)
-      { alert(errorThrown); }
-    });
+  $(".day").click(function () {
+    $(this).closest('div').toggleClass("green");
+  });
 
   // Function that cleans data for selected Timeslots divs that accepts the timepicker value and the timeslot length 
-  function selectedSlot(timepickerVal, slotLength) {
+  function selectedSlot(timepickerVal, slotLength, dayOfWeek) {
     slotArray = timepickerVal.split(/[:\s]/g);
     for (i = 0; i < 2; i++) {
       slotArray[i] = Number(slotArray[i]);
@@ -77,35 +83,53 @@ $(document).ready(function () {
     cutOff = hCutOff * 100;
     cutOff = cutOff + mCutOff;
 
+    slotLength = Number(slotLength);
+
     selectedData = {
       show: timepickerVal.replace(/\s/g, '') + "-" + hshow + ':' + mshow + meridiem,
       data: {
         start: start,
         end: end,
         cutOff: cutOff
-      }
+      },
+      length: slotLength,
+      day: dayOfWeek
     }
     return selectedData
   }
-
   $(".add").click(function () {
-    timepickerVal = $('.timepicker').val();
-    slotData = JSON.stringify(selectedSlot(timepickerVal, gon.slotLength));
-    orderData = JSON.stringify(selectedSlot(timepickerVal, gon.slotLength).data.start);
-    $(".slottable").append("<div class=\"slotbox\" data-order=" + orderData + " data-value=" + slotData + ">" + selectedSlot(timepickerVal, gon.slotLength).show + "<button class=\"remove\">x</button></div>")
-    // sorts slotboxs in order of start time for proper utilization 
-    $('.slottable').find('.slotbox').sort(function (a, b) {
-      return +a.dataset.order - +b.dataset.order;
+    dayOfWeek = [];
+    $('.green').each(function () {
+      dayOfWeek.push(this.id);
     })
-    .appendTo($('.slottable'));
+    if (dayOfWeek.length == 0) {
+      alert("No day was chosen");
+      return false;
+    } else {
+      timepickerVal = $('.timepicker').val();
+      slotLength = $('.slotLength').val();
+      slotData = String.new
+      orderData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek).data.start);
+      dayData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek).day);
+      // Appends timeslot divs to highlighted day divs
+      for (d = 0; d < dayOfWeek.length; d++) {
+        slotData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek[d]));
+        $("#" + dayOfWeek[d]).append("<div class=\"slotbox\" data-order=" + orderData + " data-value=" + slotData + ">" + selectedSlot(timepickerVal, slotLength, dayOfWeek[d]).show + "<button class=\"remove\">x</button></div>");
+      }
+      //Sorts slotboxs in order of start time 
+      for (d = 0; d < dayOfWeek.length; d++) {
+        $("#" + dayOfWeek[d]).find('.slotbox').sort(function (a, b) {
+          return +a.dataset.order - +b.dataset.order;
+        }).appendTo($("#" + dayOfWeek[d]));
+      }
+    }
     return false;
   });
 
-  $('.slottable').on('click', '.remove', function () {
+  $('.slotdays').on('click', '.remove', function () {
     $(this).closest('.slotbox').remove();
     return false;
   });
-
 
   $(".apply").click(function () {
     dataValue = []
@@ -232,6 +256,7 @@ $(document).ready(function () {
       altField: "#datep",
       beforeShowDay: unavailable,
     }).change(function () {
+      //TODO: Add logic to change function to check day?
       setTimeout(function (e) {
         // Timeslots
         $datePicker.find('.ui-datepicker-current-day')
