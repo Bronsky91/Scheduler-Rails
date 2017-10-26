@@ -282,7 +282,6 @@ $(document).ready(function () {
           }
         }
         // Hides timeslots if current time as already past and conflicts with timeslot 
-        
         for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
           if ($('#datepicker').val() == today && dayName == gon.timeslotObject['value'][j]['day']) {
             if (todayT >= gon.timeslotObject['value'][j]['data']['cutOff']) {
@@ -290,7 +289,6 @@ $(document).ready(function () {
             }
           }
         }
-        
         // Hides timeslots if conflicts in Redtail occurs
         for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           for (i = 0; i < calActObj.Activities.length; i++) {
@@ -300,6 +298,13 @@ $(document).ready(function () {
                 $(timeSlotButton[j]).addClass('disabled');
               }
             }
+          }
+        }
+        // Removes empty space when things get 'disabled'
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
+          if (dayName != gon.timeslotObject['value'][j]['day']) {
+            console.log('Fun');
+              $('.disabled').parentsUntil('tr').remove();
           }
         }
         // Shows user that timeslot was chosen

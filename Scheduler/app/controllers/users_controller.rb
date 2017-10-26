@@ -155,7 +155,7 @@ class UsersController < ApplicationController
         </tr>'
         i = i + 1
       end
-     return html
+     return html.html_safe
     end
   #Javascript variables
   gon.slot = slot(@timeslot_parsed)
