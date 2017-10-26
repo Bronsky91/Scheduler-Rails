@@ -133,11 +133,7 @@ class UsersController < ApplicationController
     gon.timeSlotEnd = Array.new
     gon.timeSlotStartCurrent = Array.new
     @timeslot_parsed = JSON.parse(@userName.timeslot)
-    @timeslot_parsed['value'].each do |value| 
-      gon.timeSlotStart.push(value['data']['start'])
-      gon.timeSlotEnd.push(value['data']['end'])
-      gon.timeSlotStartCurrent.push(value['data']['cutOff'])
-    end
+    gon.timeslotObject = @timeslot_parsed
 
     # Method to show what Timeslots get viewed on Datepicker
     def slot(parsed)
@@ -145,15 +141,15 @@ class UsersController < ApplicationController
       idArray = Array.new
       i = 0
       parsed['value'].each do |array|
-        if (array['data']['start'] >= 1200)
+        if array['data']['start'] >= 1000 && array['data']['start'] <= 1200
           butVal = array['show'][0..4] 
-         else
+        elsif array['data']['start'] < 1000 || array['data']['start'] >= 1300
           butVal = array['show'][0..3]
          end
         idArray.push(i)
        html << '<tr>
         <td colspan="8">
-        <div> <button value=' + butVal + ' class="timeSlot"' + 'id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
+        <div> <button value=' + butVal + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
         </div>
         </td>
         </tr>'
@@ -163,8 +159,6 @@ class UsersController < ApplicationController
     end
   #Javascript variables
   gon.slot = slot(@timeslot_parsed)
-  gon.numOfSlots = @timeslot_parsed['value'].length
-  gon.slotLength = @timeslot_parsed['value']['length']
 end
   private
     # Use callbacks to share common setup or constraints between actions.

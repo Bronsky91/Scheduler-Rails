@@ -6,7 +6,6 @@ $(document).ready(function () {
   clipboard.on('error', function () {
     alert('Unable to copy');
   });
-  console.log(gon.redtailid)
   if (gon.redtailid != null) {
     // API call to get Redtail Calendar preferences
     $.ajax
@@ -97,6 +96,7 @@ $(document).ready(function () {
     }
     return selectedData
   }
+
   $(".add").click(function () {
     dayOfWeek = [];
     $('.green').each(function () {
@@ -173,13 +173,6 @@ $(document).ready(function () {
     timesEnd[i] = e.getHours() + ':' + e.getMinutes();
     timesStart[i] = s.getHours() + ':' + s.getMinutes();
   }
-  // Creates an array of all dates that have all day events.
-  var allDayDates = [];
-  for (i = 0; i < datesArray.length; i++) {
-    if (allDay[i] == true) {
-      allDayDates.push(datesArray[i]);
-    }
-  }
   // Converts Timeslots to integers
   var intTimeStart = [];
   var intTimeEnd = [];
@@ -206,9 +199,9 @@ $(document).ready(function () {
   // Creates Object of Array of Date/Time Objects
   calActObj[act] = activities;
   // Loop to push full dates to fullTimesSlots array
-  for (j = 0; j < gon.timeSlotStart.length; j++) {
+  for (j = 0; j < gon.timeslotObject['value'].length; j++) {
     for (i = 0; i < calActObj.Activities.length; i++) {
-      if (calActObj.Activities[i][2] <= gon.timeSlotStart[j] || calActObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
+      if (calActObj.Activities[i][2] <= gon.timeslotObject['value'][j]['data']['start'] || calActObj.Activities[i][1] >= gon.timeslotObject['value'][j]['data']['end']) {
       } else {
         fullTimeSlots.push(calActObj.Activities[i][0])
       }
@@ -230,9 +223,10 @@ $(document).ready(function () {
     return [a, b];
   }
   var fullTimeSlots = count(fullTimeSlots);
-  // Loop that checks the fullTimeSlots correlating arrays if 3 timeslots have conflicts for the day, key is pushed into allDayDates array
+  var allDayDates = []
+  // Loop that checks the fullTimeSlots correlating arrays if slotsLength of timeslots have conflicts for the day, key is pushed into allDayDates array
   for (i = 0; i < fullTimeSlots[0].length; i++) {
-    if (fullTimeSlots[1][i] == gon.numOfSlots) {
+    if (fullTimeSlots[1][i] == gon.timeslotObject['value'].length) {
       allDayDates.push(fullTimeSlots[0][i])
     }
   }
@@ -256,7 +250,8 @@ $(document).ready(function () {
       altField: "#datep",
       beforeShowDay: unavailable,
     }).change(function () {
-      //TODO: Add logic to change function to check day?
+      var curDate = $(this).datepicker('getDate');
+      var dayName = $.datepicker.formatDate('DD', curDate);
       setTimeout(function (e) {
         // Timeslots
         $datePicker.find('.ui-datepicker-current-day')
@@ -275,23 +270,30 @@ $(document).ready(function () {
         todayT = todayT.replace(/:/g, '.');
         todayT = parseFloat(todayT);
         todayT = Math.round(todayT * 100);
-        // Hides timeslots if current time as already past and conflicts with timeslot
+        // creates array of correlating ID #s to hide timeslots
         var timeSlotButton = [];
-        for (i = 0; i < gon.numOfSlots; i++) {
+        for (i = 0; i < gon.timeslotObject['value'].length; i++) {
           timeSlotButton.push('#' + i);
         }
-        for (j = 0; j < gon.timeSlotStartCurrent.length; j++) {
+        // Hides timeslots if the timeslot is not for the right day 
+        for (i = 0; i < timeSlotButton.length; i++) {
+          if (dayName != $(timeSlotButton[i]).data('day')) {
+            $(timeSlotButton[i]).addClass('disabled');
+          }
+        }
+        // Hides timeslots if current time as already past and conflicts with timeslot 
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           if ($('#datepicker').val() == today) {
-            if (todayT >= gon.timeSlotStartCurrent[j]) {
+            if (todayT >= gon.timeslotObject['value'][j]['data']['cutOff']) {
               $(timeSlotButton[j]).addClass('disabled');
             }
           }
         }
         // Hides timeslots if conflicts in Redtail occurs
-        for (j = 0; j < gon.timeSlotStart.length; j++) {
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           for (i = 0; i < calActObj.Activities.length; i++) {
             if ($('#datepicker').val() == calActObj.Activities[i][0]) {
-              if (calActObj.Activities[i][2] <= gon.timeSlotStart[j] || calActObj.Activities[i][1] >= gon.timeSlotEnd[j]) {
+              if (calActObj.Activities[i][2] <= gon.timeslotObject['value'][j]['data']['start'] || calActObj.Activities[i][1] >= gon.timeslotObject['value'][j]['data']['end']) {
               } else {
                 $(timeSlotButton[j]).addClass('disabled');
               }
@@ -304,11 +306,11 @@ $(document).ready(function () {
           // Creates variables from chosen date/time
           var selectedTime = $(this).val();
           var selectedDate = moment($('#datepicker').val() + ' ' + selectedTime, "D-M-YYYY HH mm");
-          if (gon.slotLength == 60) {
-            var selectedDateFuture = moment(selectedDate).add(1, 'h');
-          } else {
-            var selectedDateFuture = moment(selectedDate).add(gon.slotLength, 'm');
-          }
+            if ($(this).data('length') == 60) {
+              var selectedDateFuture = moment(selectedDate).add(1, 'h');
+            } else {
+              var selectedDateFuture = moment(selectedDate).add($(this).data('length'), 'm');
+            }
           document.getElementById("scheduleAct").onclick = function () {
             var emailField = $("#email").val();
             var subjectData = $("#subject").val();
