@@ -1,21 +1,4 @@
 module UsersHelper
-    
-    def show_timeslots_selected(timeslot)
-        timeslot = JSON.parse(timeslot)
-        html = String.new
-        if timeslot == nil
-            return
-        elsif timeslot['value'].any? {|index| index['day'].include? "monday"}
-             timeslot['value'] = timeslot['value'].select {|time_slot| time_slot['day'].include?(day) }
-             timeslot['value'].each do |index|
-                html <<  content_tag(:div, class: 'slotbox', data: {value: index, order: index['data']['start'], day: index['day']} ) do
-                    content_tag(:span, index['show'], class: 'timespan') +  
-                    content_tag(:button, 'x', class:'remove')
-                end
-            end
-        html.html_safe
-        end
-    end
 
     def timepicker
         content_tag(:input, nil, class: "timepicker", size: '10')

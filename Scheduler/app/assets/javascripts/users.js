@@ -39,6 +39,7 @@ $(document).ready(function () {
 
   // Function that cleans data for selected Timeslots divs that accepts the timepicker value and the timeslot length 
   function selectedSlot(timepickerVal, slotLength, dayOfWeek) {
+    slotLength = Number(slotLength);
     slotArray = timepickerVal.split(/[:\s]/g);
     for (i = 0; i < 2; i++) {
       slotArray[i] = Number(slotArray[i]);
@@ -82,8 +83,6 @@ $(document).ready(function () {
     cutOff = hCutOff * 100;
     cutOff = cutOff + mCutOff;
 
-    slotLength = Number(slotLength);
-
     selectedData = {
       show: timepickerVal.replace(/\s/g, '') + "-" + hshow + ':' + mshow + meridiem,
       data: {
@@ -110,7 +109,6 @@ $(document).ready(function () {
       slotLength = $('.slotLength').val();
       slotData = String.new
       orderData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek).data.start);
-      dayData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek).day);
       // Appends timeslot divs to highlighted day divs
       for (d = 0; d < dayOfWeek.length; d++) {
         slotData = JSON.stringify(selectedSlot(timepickerVal, slotLength, dayOfWeek[d]));
@@ -300,10 +298,9 @@ $(document).ready(function () {
             }
           }
         }
-        // Removes empty space when things get 'disabled'
+        // Removes empty space when timeslots get 'disabled'
         for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
           if (dayName != gon.timeslotObject['value'][j]['day']) {
-            console.log('Fun');
               $('.disabled').parentsUntil('tr').remove();
           }
         }
@@ -312,6 +309,7 @@ $(document).ready(function () {
           $(this).toggleClass('active');
           // Creates variables from chosen date/time
           var selectedTime = $(this).val();
+          console.log(selectedTime);
           var selectedDate = moment($('#datepicker').val() + ' ' + selectedTime, "D-M-YYYY HH mm");
             if ($(this).data('length') == 60) {
               var selectedDateFuture = moment(selectedDate).add(1, 'h');

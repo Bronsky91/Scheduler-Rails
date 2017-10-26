@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     # Redtail username and password entered from Show View
     @reduser = params[:reduser] 
     @redpass = params[:redpass]
-    # Logic to make Auth API call if Redtail username and password was entered
+    # Makes Auth API call if Redtail username and password was entered
     if @reduser && @redpass != nil
        headers = { 
          "Authorization"  => "Basic "+ Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
@@ -126,30 +126,22 @@ class UsersController < ApplicationController
         }
       ].to_json
       )
-    # Passes variable to Javascript
+    # Passes Redtail Calendar Data variable to Javascript
     gon.calData = @calData
-    # Variables to select which timeslot gets selected to block out conflicts
-    gon.timeSlotStart = Array.new
-    gon.timeSlotEnd = Array.new
-    gon.timeSlotStartCurrent = Array.new
+    # Passes Database object to Javascript
     @timeslot_parsed = JSON.parse(@userName.timeslot)
     gon.timeslotObject = @timeslot_parsed
-
     # Method to show what Timeslots get viewed on Datepicker
     def slot(parsed)
       html = String.new
       idArray = Array.new
       i = 0
       parsed['value'].each do |array|
-        if array['data']['start'] >= 1000 && array['data']['start'] <= 1200
-          butVal = array['show'][0..4] 
-        elsif array['data']['start'] < 1000 || array['data']['start'] >= 1300
-          butVal = array['show'][0..3]
-         end
+        butVal = array['data']['start'] 
         idArray.push(i)
        html << '<tr>
         <td colspan="8">
-        <div> <button value=' + butVal + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
+        <div> <button value=' + butVal.to_s + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
         </div>
         </td>
         </tr>'
@@ -157,9 +149,10 @@ class UsersController < ApplicationController
       end
      return html.html_safe
     end
-  #Javascript variables
+  #Javascript variable of method
   gon.slot = slot(@timeslot_parsed)
-end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
