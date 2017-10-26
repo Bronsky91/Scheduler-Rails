@@ -282,13 +282,15 @@ $(document).ready(function () {
           }
         }
         // Hides timeslots if current time as already past and conflicts with timeslot 
-        for (j = 0; j < gon.timeslotObject['value'].length; j++) {
-          if ($('#datepicker').val() == today) {
+        
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
+          if ($('#datepicker').val() == today && dayName == gon.timeslotObject['value'][j]['day']) {
             if (todayT >= gon.timeslotObject['value'][j]['data']['cutOff']) {
               $(timeSlotButton[j]).addClass('disabled');
             }
           }
         }
+        
         // Hides timeslots if conflicts in Redtail occurs
         for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           for (i = 0; i < calActObj.Activities.length; i++) {
