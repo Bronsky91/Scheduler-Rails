@@ -49,7 +49,7 @@
   </p>
   <p>
     <%# Shows current timeslot selected and saved in Database from helper method%>
-     <strong>Select Day(s) to add Timeslots:</strong>
+     <strong>Select Day(s) to add Preferred Timeslots:</strong>
       <div class="slottable">
         <div class="slotdays" id="Monday">
             <button class="day" > Monday </button>
@@ -84,7 +84,7 @@
     <br>
   <%# Form to Select Timeslot on User page %>
   <%= form_for @user do |f| %>
-    <strong>Update/Choose length of Slot:</strong>
+    <strong>Update/Choose length of Preferred Slot:</strong>
     <%# Ability to change timeslot length %>
     <select class="slotLength">
       <option value="15">15 Min</option>
@@ -97,9 +97,58 @@
     <%# Add selectable timeslots %>
     <%= timepicker() %>
     <button class="add">Add</button>
-    <%= f.hidden_field :timeslot, :value => @dataValue, :class => 'hiddenValue' %>
     <br>
-    <%= f.submit "Apply Changes", :class => 'apply' %>
+    <%#
+    <p>
+         <strong>Select Day(s) to add Backup Timeslots:</strong>
+          <div class="slottable">
+            <div class="slotdays" id="Monday">
+                <button class="day" > Monday </button>
+            </div>
+            <div class="slotdays" id="Tuesday">
+                <button class="day"> Tuesday </button> 
+            </div>
+            <div class="slotdays" id="Wednesday">
+                <button class="day"> Wednesday </button>
+            </div>
+            <div class="slotdays" id="Thursday">
+                <button class="day"> Thursday </button>
+
+            </div>
+            <div class="slotdays" id="Friday">
+                <button class="day"> Friday </button>
+
+            </div>
+            <div class="slotdays" id="Saturday">
+                <button class="day"> Saturday </button>
+  
+            </div>
+            <div class="slotdays" id="Sunday">
+                <button class="day"> Sunday </button>
+
+            </div>
+          </div>
+      </p>
+      <strong>Update/Choose length of Backup Slots:</strong>
+      <select class="backupslotLength">
+          <option value="15">15 Min</option>
+          <option value="30">30 Min</option>
+          <option value="45">45 Min</option>
+          <option value="60">1 Hour</option>
+        </select>
+    <div id="time-range">
+        <p>Select Backup Time Range: <span class="slider-time">9:00 AM</span> - <span class="slider-time2">5:00 PM</span>
+        </p>
+        <div class="sliders_step1">
+            <div id="slider-range"></div>
+        </div>
+    </div>
+    <br>
+    <button class="backupadd">Add</button>
+    <hr>
+    %>
+    <%= f.hidden_field :timeslot, :value => @dataValue, :class => 'hiddenValue' %>
+    <%= f.submit "Apply Changes", :class => 'apply btn btn-success' %>
   <% end %>
 <% end %>
 </div>

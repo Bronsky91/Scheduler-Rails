@@ -62,7 +62,7 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @user.link = "localhost:3000/#{@user.username}"
+    @user.link = "schedule.bronsky.life/#{@user.username}"
     respond_to do |format|
       if @user.save
         log_in @user
@@ -137,11 +137,11 @@ class UsersController < ApplicationController
       idArray = Array.new
       i = 0
       parsed['value'].each do |array|
-        butVal = array['data']['start'] 
+          butVal = array['data']['start'] 
         idArray.push(i)
        html << '<tr>
         <td colspan="8">
-        <div> <button value=' + butVal.to_s + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
+        <div> <button value=' + butVal + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
         </div>
         </td>
         </tr>'
