@@ -102,10 +102,7 @@ class UsersController < ApplicationController
 
   def datepicker
     #for requester to browse to datepicker
-    @userName = Post.search do |query|
-      query.fulltext params[:search]
-      query.with(:user, @user.id)
-  end
+    @userName = User.find_by(username: params[:username])
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     gon.apikey = @apikey
     gon.userID = @userName.redtailid
