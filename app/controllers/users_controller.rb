@@ -137,11 +137,13 @@ class UsersController < ApplicationController
       idArray = Array.new
       i = 0
       parsed['value'].each do |array|
-        butVal = array['data']['start'] 
+        butVal = array['data']['start']
+        butVal = butVal.to_s
+        butVal.insert(-3,':')
         idArray.push(i)
        html << '<tr>
         <td colspan="8">
-        <div> <button value=' + butVal.to_s + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
+        <div> <button value=' + butVal + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
         </div>
         </td>
         </tr>'
