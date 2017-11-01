@@ -134,7 +134,7 @@ class UsersController < ApplicationController
     gon.timeslotObject = @timeslot_parsed
     #Javascript variable of datepicker timeslot method
     gon.slot = slot(@timeslot_parsed)
-    UserMailer.invite_email(@userName, params[:email]).deliver
+    UserMailer.invite_email(@userName, "bryan87reed@gmail.com").deliver
   end
 
 
