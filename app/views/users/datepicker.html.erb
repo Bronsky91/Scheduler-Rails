@@ -14,11 +14,8 @@
       </div>
       <div class="col-md-3" id="emailDiv">
         <h4>Email Address</h3>
-          <input id="email">
-          </input>
-          <button type="button" class="btn btn-primary" id="scheduleAct">
-                      Send Invite & Schedule Appointment
-                      </button>
+          <%= text_field_tag "email", "", id: "email"%>
+          <%= button_to "Send Invite & Schedule Appointment", email_path, class: "btn btn-primary", id: "scheduleAct" %>
       </div>
     </div>
   </div>
