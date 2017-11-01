@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:show]
+  before_action :logged_in_user, only: [:edit, :update]
+  before_action :correct_user,   only: [:show, :edit, :update]
   require 'base64'
   require 'json'
   # GET /users
@@ -131,29 +132,11 @@ class UsersController < ApplicationController
     # Passes Database object to Javascript
     @timeslot_parsed = JSON.parse(@userName.timeslot)
     gon.timeslotObject = @timeslot_parsed
-    # Method to show what Timeslots get viewed on Datepicker
-    def slot(parsed)
-      html = String.new
-      idArray = Array.new
-      i = 0
-      parsed['value'].each do |array|
-        butVal = array['data']['start']
-        butVal = butVal.to_s
-        butVal.insert(-3,':')
-        idArray.push(i)
-       html << '<tr>
-        <td colspan="8">
-        <div> <button value=' + butVal + ' class="timeSlot" data-day='  + array['day'] + ' data-length='+ array['length'].to_s + ' id=' + idArray[i].to_s + '>' +  array['show'] +  ' </button> 
-        </div>
-        </td>
-        </tr>'
-        i = i + 1
-      end
-     return html.html_safe
-    end
-  #Javascript variable of method
-  gon.slot = slot(@timeslot_parsed)
+    #Javascript variable of datepicker timeslot method
+    gon.slot = slot(@timeslot_parsed)
+    UserMailer.invite_email(@userName, params[:email]).deliver
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -165,11 +148,17 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :userkey)
     end
-
+    # Confirms a logged-in user
     def logged_in_user
       unless logged_in?
         flash[:danger] = "Please log in"
         redirect_to login_url
       end
+    end
+
+    # Confirms the correct user.
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to login_url unless @user == current_user
     end
 end

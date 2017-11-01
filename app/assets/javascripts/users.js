@@ -315,6 +315,7 @@ $(document).ready(function () {
             } else {
               var selectedDateFuture = moment(selectedDate).add($(this).data('length'), 'm');
             }
+          // Button to schdedule appointment in Redtail and send invition emails  
           document.getElementById("scheduleAct").onclick = function () {
             var emailField = $("#email").val();
             var subjectData = $("#subject").val();
@@ -392,3 +393,6 @@ $(document).ready(function () {
     });
   });
 })
+
+
+
