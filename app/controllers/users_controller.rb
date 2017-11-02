@@ -134,7 +134,7 @@ class UsersController < ApplicationController
     gon.timeslotObject = @timeslot_parsed
     #Javascript variable of datepicker timeslot method
     gon.slot = slot(@timeslot_parsed)
-    UserMailer.invite_email(@userName, "bryan87reed@gmail.com").deliver
+    
   end
 
 
@@ -146,7 +146,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:username, :email, :password, :timeslot, :redtailid, :userkey)
+      params.require(:user).permit(:name, :username, :email, :password, :timeslot, :redtailid, :userkey)
     end
     # Confirms a logged-in user
     def logged_in_user

@@ -16,6 +16,11 @@
         <h4>Email Address</h3>
           <%= text_field_tag "email", "", id: "email"%>
           <%= button_to "Send Invite & Schedule Appointment", email_path, class: "btn btn-primary", id: "scheduleAct" %>
+          <%= hidden_field "send", "", id: "send"%>
+          <% if params[:send] != "" %>
+          <%# Sends invitation Email %>
+         <% UserMailer.invite_email(@userName, params[:email]).deliver %>
+         <% end %>
       </div>
     </div>
   </div>

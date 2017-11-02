@@ -280,7 +280,7 @@ $(document).ready(function () {
           }
         }
         // Hides timeslots if current time as already past and conflicts with timeslot 
-        for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           if ($('#datepicker').val() == today && dayName == gon.timeslotObject['value'][j]['day']) {
             if (todayT >= gon.timeslotObject['value'][j]['data']['cutOff']) {
               $(timeSlotButton[j]).addClass('disabled');
@@ -299,9 +299,9 @@ $(document).ready(function () {
           }
         }
         // Removes empty space when timeslots get 'disabled'
-        for (j = 0; j < gon.timeslotObject['value'].length; j++) {          
+        for (j = 0; j < gon.timeslotObject['value'].length; j++) {
           if (dayName != gon.timeslotObject['value'][j]['day']) {
-              $('.disabled').parentsUntil('tr').remove();
+            $('.disabled').parentsUntil('tr').remove();
           }
         }
         // Shows user that timeslot was chosen
@@ -310,11 +310,11 @@ $(document).ready(function () {
           // Creates variables from chosen date/time
           var selectedTime = $(this).val();
           var selectedDate = moment($('#datepicker').val() + ' ' + selectedTime, "D-M-YYYY HH mm");
-            if ($(this).data('length') == 60) {
-              var selectedDateFuture = moment(selectedDate).add(1, 'h');
-            } else {
-              var selectedDateFuture = moment(selectedDate).add($(this).data('length'), 'm');
-            }
+          if ($(this).data('length') == 60) {
+            var selectedDateFuture = moment(selectedDate).add(1, 'h');
+          } else {
+            var selectedDateFuture = moment(selectedDate).add($(this).data('length'), 'm');
+          }
           // Button to schdedule appointment in Redtail and send invition emails  
           document.getElementById("scheduleAct").onclick = function () {
             var emailField = $("#email").val();
@@ -347,10 +347,13 @@ $(document).ready(function () {
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                           success: function (actData) {
                             alert("Appointment Scheduled!");
+                            $("#send").append("Ready to Send email");
+                            location.reload();
                             // Clears Subject and Details boxess
                             $("#subject").val('');
                             $("#details").val('');
                             $("#email").val('');
+                            $("#send").val('');
                             location.reload();
                           }, error: function (XMLHttpRequest, textStatus, errorThrown)
                           { alert(errorThrown); }
