@@ -173,15 +173,13 @@
 
 4
 5
-6
-7</pre>
+6</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/mailers/user_mailer.rb', line 4</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_invite_email'>invite_email</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_requestor'>requestor</span><span class='rparen'>)</span>
-  <span class='ivar'>@user</span> <span class='op'>=</span> <span class='id identifier rubyid_user'>user</span>
-  <span class='id identifier rubyid_mail'>mail</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_requestor'>requestor</span><span class='comma'>,</span> <span class='label'>subject:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Invitation for Scheduled Appointment</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_mail'>mail</span><span class='lparen'>(</span><span class='label'>to:</span> <span class='id identifier rubyid_requestor'>requestor</span><span class='comma'>,</span> <span class='label'>subject:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Invitation for Scheduled Appointment</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -193,7 +191,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Nov  2 12:15:04 2017 by
+  Generated on Thu Nov  2 15:46:51 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

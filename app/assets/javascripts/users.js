@@ -346,15 +346,10 @@ $(document).ready(function () {
                           },
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                           success: function (actData) {
+                            $("#send").val("Ready");
                             alert("Appointment Scheduled!");
-                            $("#send").val("Ready to send email");
                             location.reload();
-                            // Clears Subject and Details boxess
-                            $("#subject").val('');
-                            $("#details").val('');
-                            $("#email").val('');
-                            $("#send").val('');
-                            location.reload();
+                            console.log(gon.test);
                           }, error: function (XMLHttpRequest, textStatus, errorThrown)
                           { alert(errorThrown); }
                         });

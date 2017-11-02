@@ -14,14 +14,13 @@
       </div>
       <div class="col-md-3" id="emailDiv">
         <h4>Email Address</h3>
+          <%= form_tag(:controller => "users", :action => "scheduled", method: 'post') do %>
           <%= text_field_tag "email", "", id: "email"%>
-          <button class="btn btn-primary" id="scheduleAct">Send Invite & Schedule Appointment</button>
-          <%= hidden_field "send", "", id: "send"%>
-          <% if params[:send] == "Ready to Send email" %>
-          <%# Sends invitation Email %>
-            <%= "poo poo" %>
-            <% UserMailer.invite_email(@userName, params[:email]).deliver %>
-         <% end %>
+          <%= hidden_field_tag "ics", "", id: "ics"%>
+          <%= hidden_field_tag "user", @username %>
+          <button class="btn btn-primary" id="scheduleAct">Schedule Appointment</button>
+          <%= submit_tag "Send Calendar Invite", class: "btn btn-success" %>
+          <% end %>
       </div>
     </div>
   </div>
