@@ -15,11 +15,12 @@
       <div class="col-md-3" id="emailDiv">
         <h4>Email Address</h3>
           <%= text_field_tag "email", "", id: "email"%>
-          <%= button_to "Send Invite & Schedule Appointment", email_path, class: "btn btn-primary", id: "scheduleAct" %>
+          <button class="btn btn-primary" id="scheduleAct">Send Invite & Schedule Appointment</button>
           <%= hidden_field "send", "", id: "send"%>
-          <% if params[:send] != "" %>
+          <% if params[:send] == "Ready to Send email" %>
           <%# Sends invitation Email %>
-         <% UserMailer.invite_email(@userName, params[:email]).deliver %>
+            <%= "poo poo" %>
+            <% UserMailer.invite_email(@userName, params[:email]).deliver %>
          <% end %>
       </div>
     </div>
