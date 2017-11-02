@@ -1,4 +1,5 @@
 module UsersHelper 
+
     # Creates timepicker html element
     def timepicker
         content_tag(:input, nil, class: "timepicker", size: '10')
