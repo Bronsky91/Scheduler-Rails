@@ -103,15 +103,16 @@ class UsersController < ApplicationController
 
   def datepicker
     #for requester to browse to datepicker
-    @userName = User.find_by(username: params[:username])
+    @user = User.find_by(username: params[:username])
+    @username = @user.username
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     gon.apikey = @apikey
-    gon.userID = @userName.redtailid
-    gon.userkey = @userName.userkey
+    gon.userID = @user.redtailid
+    gon.userkey = @user.userkey
     #Creates Variables for 3 week date range activities API call
     @currentDate = Time.now.strftime("%m-%d-%Y")
     headers = { 
-      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(@apikey+":"+@userName.userkey),
+      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(@apikey+":"+@user.userkey),
       "Content-Type" => "application/json", "Accept" => "application/json"
           } 
     # API call to gather all Redtail Activities in the next 3 weeks
@@ -120,7 +121,7 @@ class UsersController < ApplicationController
       :headers => headers,
       :body => [
         {  
-           Field: 21, Operand: 0, Value: @userName.redtailid
+           Field: 21, Operand: 0, Value: @user.redtailid
         },
         {
            Field: 4, Operand: 1, Value: @currentDate
@@ -130,11 +131,15 @@ class UsersController < ApplicationController
     # Passes Redtail Calendar Data variable to Javascript
     gon.calData = @calData
     # Passes Database object to Javascript
-    @timeslot_parsed = JSON.parse(@userName.timeslot)
+    @timeslot_parsed = JSON.parse(@user.timeslot)
     gon.timeslotObject = @timeslot_parsed
     #Javascript variable of datepicker timeslot method
     gon.slot = slot(@timeslot_parsed)
-    
+  end
+
+  def scheduled
+    @user = User.find_by(username: params[:user])
+    UserMailer.invite_email(@user,params[:email]).deliver
   end
 
 
