@@ -347,7 +347,7 @@ $(document).ready(function () {
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                           success: function (actData) {
                             alert("Appointment Scheduled!");
-                            $("#send").append("Ready to Send email");
+                            $("#send").val("Ready to send email");
                             location.reload();
                             // Clears Subject and Details boxess
                             $("#subject").val('');
