@@ -104,7 +104,6 @@ class UsersController < ApplicationController
   def datepicker
     #for requester to browse to datepicker
     @user = User.find_by(username: params[:username])
-    @username = @user.username
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     gon.apikey = @apikey
     gon.userID = @user.redtailid
@@ -140,8 +139,8 @@ class UsersController < ApplicationController
   def scheduled
     @user = User.find_by(username: params[:user])
     UserMailer.invite_email(@user,params[:email]).deliver
+    redirect_to datepicker_path(username: @user.username)
   end
-
 
   private
     # Use callbacks to share common setup or constraints between actions.
