@@ -1,9 +1,9 @@
 module UsersHelper 
-
     # Creates timepicker html element
     def timepicker
         content_tag(:input, nil, class: "timepicker", size: '10')
     end
+
     # Adds slotbox html elements to view per day
     def available_time_slots_for(time_hash, day)
         if time_hash == nil
@@ -42,4 +42,20 @@ module UsersHelper
         end
        return html.html_safe
       end
+
+      #icalendar creation method
+      def make_ical
+        cal = Icalendar::Calendar.new
+        cal.event do |e|
+          e.dtstart     = Icalendar::Values::Date.new('20050428')
+          e.dtend       = Icalendar::Values::Date.new('20050429')
+          e.summary     = "Meeting with the man."
+          e.description = "Have a long lunch meeting and decide nothing..."
+        end
+        cal.publish
+        file = File.new("tmp/ics_files/sample.ics", "w+")
+        file.write(cal.to_ical)
+        file.close
+       end
+
 end

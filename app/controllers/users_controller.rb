@@ -138,6 +138,7 @@ class UsersController < ApplicationController
 
   def scheduled
     @user = User.find_by(username: params[:user])
+    make_ical
     UserMailer.invite_email(@user,params[:email]).deliver
     redirect_to datepicker_path(username: @user.username)
   end
