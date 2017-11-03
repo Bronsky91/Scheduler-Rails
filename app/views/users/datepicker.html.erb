@@ -14,6 +14,7 @@
       </div>
       <div class="col-md-3" id="emailDiv">
         <h4>Email Address</h3>
+          <%# Hidden fields used to send to Scheduled Controller for sending invites %>
           <%= form_tag(:controller => "users", :action => "scheduled", method: 'post') do %>
             <%= text_field_tag "email", "", id: "email"%>
             <%= hidden_field_tag "ics", "", id: "ics"%>

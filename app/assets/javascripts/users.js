@@ -324,6 +324,7 @@ $(document).ready(function () {
             var unixTimeForward = selectedDateFuture.valueOf();
             var icalStart = selectedDate.format();
             var icalEnd = selectedDateFuture.format();
+            // PUT API Call to Create Activity in Redtail
             function activityCreationCall() {
               $.ajax
               ({
@@ -335,6 +336,7 @@ $(document).ready(function () {
                 },
                 data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeForward + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                 success: function (actData) {
+                  // Creates timeslotData object to use in .ics file
                   timeslotData = {
                     startTime: icalStart,
                     endTime: icalEnd,
@@ -348,6 +350,7 @@ $(document).ready(function () {
                 { alert(errorThrown); }
               });
             }
+            // API Call to check if email entered is a contact in Redtail to link
             $.ajax
               ({
                 type: "POST",
@@ -361,7 +364,6 @@ $(document).ready(function () {
                   if (clientData.Contacts == null) {
                     c = confirm("Schedule Appointment?");
                     if (c == true) {
-                      // PUT call to create activity in Redtail
                       activityCreationCall();
                     } else {
                       alert("Nothing scheduled yet");

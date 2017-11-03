@@ -102,19 +102,19 @@ class UsersController < ApplicationController
   end
 
   def datepicker
-    #for requester to browse to datepicker
+    # Sets JS variables for Datepicker
     @user = User.find_by(username: params[:username])
     @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
     gon.apikey = @apikey
     gon.userID = @user.redtailid
     gon.userkey = @user.userkey
-    #Creates Variables for 3 week date range activities API call
+    # Creates Variable object of upcoming activities
     @currentDate = Time.now.strftime("%m-%d-%Y")
     headers = { 
       "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(@apikey+":"+@user.userkey),
       "Content-Type" => "application/json", "Accept" => "application/json"
           } 
-    # API call to gather all Redtail Activities in the next 3 weeks
+    # API call to gather all upcoming Redtail Activities
     @calData = HTTParty.post(
       "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search", 
       :headers => headers,
@@ -138,8 +138,11 @@ class UsersController < ApplicationController
 
   def scheduled
     @user = User.find_by(username: params[:user])
+    # Parses JSON object of timeslot selected by requester
     timeslot_data_parsed = JSON.parse(params[:timeslot])
+    # Method that creates iCal
     make_ical(timeslot_data_parsed)
+    # Mailer Method that sends email via postfix
     UserMailer.invite_email(@user,params[:email]).deliver
     redirect_to datepicker_path(username: @user.username)
   end
