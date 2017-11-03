@@ -1,4 +1,4 @@
-app/models/user.rb 7f35f7c452b6308fe9441d45e32393ff19986fd8
+app/models/user.rb 1c864e905f2bfbbac06f5bb14695f5e3876e22e6
 app/mailers/user_mailer.rb 8bc4668fd3ffab4c0c7f34a206b369de6b1bfb39
 app/helpers/users_helper.rb ab1517dd153c0edacecc7320a88b17380f7481fe
 app/jobs/application_job.rb 9a24c3e30cfb517943d8774df4695ba794bfd69d
