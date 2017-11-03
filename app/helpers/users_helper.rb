@@ -51,6 +51,7 @@ module UsersHelper
           e.dtend       = DateTime.parse(timeslot_data['endTime'])
           e.summary     = timeslot_data['subject']
           e.description = timeslot_data['details']
+          e.organizer = "Your Advisor Financial Advisor"
         end
         cal.publish
         file = File.new("tmp/ics_files/invite.ics", "w+")

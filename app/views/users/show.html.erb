@@ -16,6 +16,7 @@
       <% else @user.redtailid %>
          Yes 
          <br>
+         <%# Removes integration %>
          <%= form_for @user do |f| %>
          <%= f.hidden_field :redtailid, :value => nil %>
          <%= f.hidden_field :userkey, :value => nil %>
@@ -52,7 +53,7 @@
     <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
   </p>
   <p>
-    <%# Shows current timeslot selected and saved in Database from helper method%>
+    <%# Shows current timeslot selected and saved in Database from helper method for each day %>
      <strong>Select Day(s) to add Preferred Timeslots:</strong>
       <div class="slottable">
         <div class="slotdays" id="Monday">
@@ -102,6 +103,7 @@
     <%= timepicker() %>
     <button class="add">Add</button>
     <br>
+    <%# Hidden field used to submit Timeslot div data to Database, if no new Timeslots selected @dataValue will be what is already saved.%>
     <%= f.hidden_field :timeslot, :value => @dataValue, :class => 'hiddenValue' %>
     <%= f.submit "Apply Changes", :class => 'apply btn btn-success' %>
   <% end %>
