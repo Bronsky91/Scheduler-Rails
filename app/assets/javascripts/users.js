@@ -32,7 +32,7 @@ $(document).ready(function () {
         { alert(errorThrown); }
       });
   }
-
+  // Makes selected day green
   $(".day").click(function () {
     $(this).closest('div').toggleClass("green");
   });
@@ -95,7 +95,7 @@ $(document).ready(function () {
     }
     return selectedData
   }
-
+  // add button that adds timeslot div to whichever day is selected ie. Green
   $(".add").click(function () {
     dayOfWeek = [];
     $('.green').each(function () {
@@ -123,12 +123,12 @@ $(document).ready(function () {
     }
     return false;
   });
-
+  // Removes timeslot div from day
   $('.slotdays').on('click', '.remove', function () {
     $(this).closest('.slotbox').remove();
     return false;
   });
-
+  // applies changes to database
   $(".apply").click(function () {
     dataValue = []
     $('.slotbox').each(function () {
@@ -321,7 +321,33 @@ $(document).ready(function () {
             var subjectData = $("#subject").val();
             var detailsData = $("#details").val();
             var unixTime = selectedDate.valueOf();
-            var unixTimeHour = selectedDateFuture.valueOf();
+            var unixTimeForward = selectedDateFuture.valueOf();
+            var icalStart = selectedDate.format();
+            var icalEnd = selectedDateFuture.format();
+            function activityCreationCall() {
+              $.ajax
+              ({
+                type: "PUT",
+                url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
+                contentType: "application/json",
+                headers: {
+                  "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                },
+                data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeForward + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
+                success: function (actData) {
+                  timeslotData = {
+                    startTime: icalStart,
+                    endTime: icalEnd,
+                    subject: subjectData,
+                    details: detailsData
+                  }
+                  timeslotData = JSON.stringify(timeslotData);
+                  $('#timeslot_data').val(timeslotData);
+                  alert("Appointment Scheduled!");
+                }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                { alert(errorThrown); }
+              });
+            }
             $.ajax
               ({
                 type: "POST",
@@ -336,20 +362,7 @@ $(document).ready(function () {
                     c = confirm("Schedule Appointment?");
                     if (c == true) {
                       // PUT call to create activity in Redtail
-                      $.ajax
-                        ({
-                          type: "PUT",
-                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
-                          contentType: "application/json",
-                          headers: {
-                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
-                          },
-                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
-                          success: function (actData) {
-                            alert("Appointment Scheduled!");
-                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
-                          { alert(errorThrown); }
-                        });
+                      activityCreationCall();
                     } else {
                       alert("Nothing scheduled yet");
                     }
@@ -357,21 +370,7 @@ $(document).ready(function () {
                     var clientID = clientData.Contacts[0].ClientID;
                     var cf = confirm("Schedule appointment?");
                     if (cf == true) {
-                      // PUT call to create activity in Redtail
-                      $.ajax
-                        ({
-                          type: "PUT",
-                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
-                          contentType: "application/json",
-                          headers: {
-                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
-                          },
-                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData, "ClientID": clientID }),
-                          success: function (actData) {
-                            alert("Appointment Scheduled!");
-                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
-                          { alert(errorThrown); }
-                        });
+                      activityCreationCall();
                     }
                   }
                 }, error: function (XMLHttpRequest, textStatus, errorThrown)

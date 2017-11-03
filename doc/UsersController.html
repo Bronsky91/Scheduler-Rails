@@ -514,7 +514,7 @@
     <span class='rparen'>)</span>
   <span class='comment'># Passes Redtail Calendar Data variable to Javascript
 </span>  <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_calData'>calData</span> <span class='op'>=</span> <span class='ivar'>@calData</span>
-  <span class='comment'># Passes Database object to Javascript
+  <span class='comment'># Passes timeslot data json object to Javascript
 </span>  <span class='ivar'>@timeslot_parsed</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_timeslot'>timeslot</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_gon'>gon</span><span class='period'>.</span><span class='id identifier rubyid_timeslotObject'>timeslotObject</span> <span class='op'>=</span> <span class='ivar'>@timeslot_parsed</span>
   <span class='comment'>#Javascript variable of datepicker timeslot method
@@ -715,14 +715,16 @@
 141
 142
 143
-144</pre>
+144
+145</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/controllers/users_controller.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_scheduled'>scheduled</span>
   <span class='ivar'>@user</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="User.html" title="User (class)">User</a></span></span><span class='period'>.</span><span class='id identifier rubyid_find_by'>find_by</span><span class='lparen'>(</span><span class='label'>username:</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:user</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_make_ical'>make_ical</span>
+  <span class='id identifier rubyid_timeslot_data_parsed'>timeslot_data_parsed</span> <span class='op'>=</span> <span class='const'>JSON</span><span class='period'>.</span><span class='id identifier rubyid_parse'>parse</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:timeslot</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_make_ical'>make_ical</span><span class='lparen'>(</span><span class='id identifier rubyid_timeslot_data_parsed'>timeslot_data_parsed</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="UserMailer.html" title="UserMailer (class)">UserMailer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_invite_email'><span class='object_link'><a href="UserMailer.html#invite_email-instance_method" title="UserMailer#invite_email (method)">invite_email</a></span></span><span class='lparen'>(</span><span class='ivar'>@user</span><span class='comma'>,</span><span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:email</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_deliver'>deliver</span>
   <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_datepicker_path'>datepicker_path</span><span class='lparen'>(</span><span class='label'>username:</span> <span class='ivar'>@user</span><span class='period'>.</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -900,7 +902,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Nov  3 08:59:47 2017 by
+  Generated on Fri Nov  3 10:41:20 2017 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.9 (ruby-2.4.0).
 </div>

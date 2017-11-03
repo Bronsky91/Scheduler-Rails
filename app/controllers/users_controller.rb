@@ -129,7 +129,7 @@ class UsersController < ApplicationController
       )
     # Passes Redtail Calendar Data variable to Javascript
     gon.calData = @calData
-    # Passes Database object to Javascript
+    # Passes timeslot data json object to Javascript
     @timeslot_parsed = JSON.parse(@user.timeslot)
     gon.timeslotObject = @timeslot_parsed
     #Javascript variable of datepicker timeslot method
@@ -138,7 +138,8 @@ class UsersController < ApplicationController
 
   def scheduled
     @user = User.find_by(username: params[:user])
-    make_ical
+    timeslot_data_parsed = JSON.parse(params[:timeslot])
+    make_ical(timeslot_data_parsed)
     UserMailer.invite_email(@user,params[:email]).deliver
     redirect_to datepicker_path(username: @user.username)
   end
