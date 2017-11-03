@@ -324,32 +324,6 @@ $(document).ready(function () {
             var unixTimeForward = selectedDateFuture.valueOf();
             var icalStart = selectedDate.format();
             var icalEnd = selectedDateFuture.format();
-            // PUT API Call to Create Activity in Redtail
-            function activityCreationCall() {
-              $.ajax
-              ({
-                type: "PUT",
-                url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
-                contentType: "application/json",
-                headers: {
-                  "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
-                },
-                data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeForward + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
-                success: function (actData) {
-                  // Creates timeslotData object to use in .ics file
-                  timeslotData = {
-                    startTime: icalStart,
-                    endTime: icalEnd,
-                    subject: subjectData,
-                    details: detailsData
-                  }
-                  timeslotData = JSON.stringify(timeslotData);
-                  $('#timeslot_data').val(timeslotData);
-                  alert("Appointment Scheduled!");
-                }, error: function (XMLHttpRequest, textStatus, errorThrown)
-                { alert(errorThrown); }
-              });
-            }
             // API Call to check if email entered is a contact in Redtail to link
             $.ajax
               ({
@@ -364,7 +338,30 @@ $(document).ready(function () {
                   if (clientData.Contacts == null) {
                     c = confirm("Schedule Appointment?");
                     if (c == true) {
-                      activityCreationCall();
+                      // PUT API Call to Create Activity in Redtail
+                      $.ajax
+                        ({
+                          type: "PUT",
+                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
+                          contentType: "application/json",
+                          headers: {
+                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                          },
+                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeForward + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
+                          success: function (actData) {
+                            // Creates timeslotData object to use in .ics file
+                            timeslotData = {
+                              startTime: icalStart,
+                              endTime: icalEnd,
+                              subject: subjectData,
+                              details: detailsData
+                            }
+                            timeslotData = JSON.stringify(timeslotData);
+                            $('#timeslot_data').val(timeslotData);
+                            alert("Appointment Scheduled!");
+                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                          { alert(errorThrown); }
+                        });
                     } else {
                       alert("Nothing scheduled yet");
                     }
@@ -372,7 +369,30 @@ $(document).ready(function () {
                     var clientID = clientData.Contacts[0].ClientID;
                     var cf = confirm("Schedule appointment?");
                     if (cf == true) {
-                      activityCreationCall();
+                      // PUT API Call to Create Activity in Redtail that includes Client ID to link email
+                      $.ajax
+                        ({
+                          type: "PUT",
+                          url: "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/activities/0",
+                          contentType: "application/json",
+                          headers: {
+                            "Authorization": "Userkeyauth " + btoa(gon.apikey + ":" + gon.userkey)
+                          },
+                          data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeForward + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData, "ClientID": clientID }),
+                          success: function (actData) {
+                            // Creates timeslotData object to use in .ics file
+                            timeslotData = {
+                              startTime: icalStart,
+                              endTime: icalEnd,
+                              subject: subjectData,
+                              details: detailsData
+                            }
+                            timeslotData = JSON.stringify(timeslotData);
+                            $('#timeslot_data').val(timeslotData);
+                            alert("Appointment Scheduled!");
+                          }, error: function (XMLHttpRequest, textStatus, errorThrown)
+                          { alert(errorThrown); }
+                        });
                     }
                   }
                 }, error: function (XMLHttpRequest, textStatus, errorThrown)
