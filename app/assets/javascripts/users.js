@@ -347,7 +347,6 @@ $(document).ready(function () {
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData }),
                           success: function (actData) {
                             alert("Appointment Scheduled!");
-                            location.reload();
                           }, error: function (XMLHttpRequest, textStatus, errorThrown)
                           { alert(errorThrown); }
                         });
@@ -370,7 +369,6 @@ $(document).ready(function () {
                           data: JSON.stringify({ "ActivityOwnerID": gon.userID, "StartDate": "\/Date(" + unixTime + ")\/", "EndDate": "\/Date(" + unixTimeHour + ")\/", "TypeID": 2, "AllDayEvent": false, "Subject": subjectData, "Note": detailsData, "ClientID": clientID }),
                           success: function (actData) {
                             alert("Appointment Scheduled!");
-                            location.reload();
                           }, error: function (XMLHttpRequest, textStatus, errorThrown)
                           { alert(errorThrown); }
                         });
