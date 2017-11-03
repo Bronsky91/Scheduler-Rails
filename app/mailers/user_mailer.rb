@@ -3,7 +3,7 @@ class UserMailer < ApplicationMailer
 
     def invite_email(user, requestor)
         @user = user
-        attachments['sample.ics'] = File.read("tmp/ics_files/sample.ics")
+        attachments['invite.ics'] = File.read("tmp/ics_files/invite.ics")
         mail(to: requestor, subject: 'Invitation for Scheduled Appointment')
     end
 

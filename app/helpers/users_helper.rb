@@ -44,16 +44,16 @@ module UsersHelper
       end
 
       #icalendar creation method
-      def make_ical
+      def make_ical(timeslot_data)
         cal = Icalendar::Calendar.new
         cal.event do |e|
-          e.dtstart     = Icalendar::Values::Date.new('20050428')
-          e.dtend       = Icalendar::Values::Date.new('20050429')
-          e.summary     = "Meeting with the man."
-          e.description = "Have a long lunch meeting and decide nothing..."
+          e.dtstart     = DateTime.parse(timeslot_data['startTime'])
+          e.dtend       = DateTime.parse(timeslot_data['endTime'])
+          e.summary     = timeslot_data['subject']
+          e.description = timeslot_data['details']
         end
         cal.publish
-        file = File.new("tmp/ics_files/sample.ics", "w+")
+        file = File.new("tmp/ics_files/invite.ics", "w+")
         file.write(cal.to_ical)
         file.close
        end

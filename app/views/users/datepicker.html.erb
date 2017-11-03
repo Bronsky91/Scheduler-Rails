@@ -18,6 +18,7 @@
             <%= text_field_tag "email", "", id: "email"%>
             <%= hidden_field_tag "ics", "", id: "ics"%>
             <%= hidden_field_tag "user", @user.username %>
+            <%= hidden_field_tag "timeslot", "", id: "timeslot_data" %>
             <button type="button" class="btn btn-primary" id="scheduleAct">Schedule Appointment</button>
             <%= submit_tag "Send Calendar Invite to Self", class: "btn btn-success" %>
           <% end %>
