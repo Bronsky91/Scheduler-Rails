@@ -5,6 +5,8 @@ class User < ApplicationRecord
                     format: {
                         with: /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9\.-]+\.[A-Za-z]+\Z/
                     }
+
+    validates :username, presence: true, uniqueness: { case_sensitive: false }
                     
     before_save :downcase_email
     before_save :downcase_username
