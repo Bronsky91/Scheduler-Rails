@@ -15,11 +15,11 @@
       <div class="col-md-3" id="emailDiv">
         <h4>Email Address</h3>
           <%= form_tag(:controller => "users", :action => "scheduled", method: 'post') do %>
-          <%= text_field_tag "email", "", id: "email"%>
-          <%= hidden_field_tag "ics", "", id: "ics"%>
-          <%= hidden_field_tag "user", @username %>
-          <button class="btn btn-primary" id="scheduleAct">Schedule Appointment</button>
-          <%= submit_tag "Send Calendar Invite", class: "btn btn-success" %>
+            <%= text_field_tag "email", "", id: "email"%>
+            <%= hidden_field_tag "ics", "", id: "ics"%>
+            <%= hidden_field_tag "user", @user.username %>
+            <button type="button" class="btn btn-primary" id="scheduleAct">Schedule Appointment</button>
+            <%= submit_tag "Send Calendar Invite to Self", class: "btn btn-success" %>
           <% end %>
       </div>
     </div>
