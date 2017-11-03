@@ -49,7 +49,7 @@
   <p style="display:inline;">
     <%# Shows link that was created in Controller for user which goes to Datepicker %>
     <strong>Datepicker Link:</strong>
-    <p style="display:inline;" id ="linkshare"><%= @user.link %></p>
+    <p style="display:inline;" id ="linkshare"><%= "schedule.bronsky.life/#{@user.username}" %></p>
     <button copy-to-clipboard-button data-clipboard-target="#linkshare" >Click to Copy Link</button>
   </p>
   <p>

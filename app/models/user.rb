@@ -7,9 +7,12 @@ class User < ApplicationRecord
                     }
                     
     before_save :downcase_email
+    before_save :downcase_username
 
     def downcase_email
         self.email = email.downcase
     end
-
+    def downcase_username
+        self.username = username.downcase
+    end
 end
