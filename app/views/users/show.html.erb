@@ -14,7 +14,7 @@
     <% if [nil, 0].include? @user.redtailid %>
         No, log in below to integrate
       <% else @user.redtailid %>
-         Yes 
+         Yes
          <br>
          <%= form_for @user do |f| %>
          <%= f.hidden_field :redtailid, :value => nil %>
@@ -25,7 +25,7 @@
   </p>
   <% if [nil, 0].include? @user.redtailid %>
     <%# Redtail Login form, saves Redtail username and password to variables in controller %>
-    <%= form_tag showme_path, :method => :post, id: 'integrate' do %>
+    <%= form_tag link_to_redtail_user_path, :method => :post, id: 'integrate' do %>
       <%= label_tag(:reduser, "Redtail Username:") %>
       <%= text_field_tag(:reduser) %>
       <br>
@@ -60,7 +60,7 @@
             <%= available_time_slots_for(@user.timeslot, "Monday") %>
         </div>
         <div class="slotdays" id="Tuesday">
-            <button class="day"> Tuesday </button> 
+            <button class="day"> Tuesday </button>
             <%= available_time_slots_for(@user.timeslot, "Tuesday") %>
         </div>
         <div class="slotdays" id="Wednesday">
