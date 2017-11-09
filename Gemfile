@@ -43,6 +43,13 @@ gem 'clipboard-rails'
 
 gem 'bootstrap-sass'
 
+# Use for linter
+gem 'rubocop'
+gem 'ruby-lint'
+gem 'reek'
+gem 'fasterer'
+gem 'debride'
+
 # Use Capistrano for deployment
 #gem 'capistrano-rails', group: :development
 

@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     # Passes API key to JS file
     gon.apikey = @apikey
     # Redtail username and password entered from Show View
-    @reduser = params[:reduser] 
+    @reduser = params[:reduser]
     @redpass = params[:redpass]
     # Makes Auth API call if Redtail username and password was entered
     if @reduser && @redpass != nil
