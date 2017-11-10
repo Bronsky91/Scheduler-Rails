@@ -1,5 +1,6 @@
 app/models/user.rb 1c864e905f2bfbbac06f5bb14695f5e3876e22e6
 app/mailers/user_mailer.rb 8bc4668fd3ffab4c0c7f34a206b369de6b1bfb39
+<<<<<<< HEAD
 app/helpers/users_helper.rb c1a8920d99990639fd77773f248f837f4700478a
 app/jobs/application_job.rb 9a24c3e30cfb517943d8774df4695ba794bfd69d
 app/modules/session_utils.rb d157005042a004189e396dc7754748a1fad51b4f
@@ -10,4 +11,16 @@ app/controllers/users_controller.rb bfb3e39a54a8c9ffe42824b041a170a4dde4ef53
 app/controllers/sessions_controller.rb 18c784e36c38ddb9aa5e6417483810d659002d69
 app/channels/application_cable/channel.rb 54156ee2853cfdea4e3147cdb260776b8d90b646
 app/controllers/application_controller.rb d9f1ae5e2458b6b48d7bc7fbb5cbae1a52c9ed66
+=======
+app/helpers/users_helper.rb ab1517dd153c0edacecc7320a88b17380f7481fe
+app/jobs/application_job.rb 9a24c3e30cfb517943d8774df4695ba794bfd69d
+app/helpers/sessions_helper.rb 47bfd343f5d373a393b7ae39b52c96b8b11c361d
+app/models/application_record.rb b40193a5447806d689d114a0f55f392ae7c199e4
+app/helpers/application_helper.rb 0f8fad86627c4037b8935afdc5f47d802296b06f
+app/mailers/application_mailer.rb d8f3c8a175c9b44ee0ed7e8120eb5ca3c252d1cb
+app/controllers/users_controller.rb fa8e0695caa4f212f4922668529857a0305f5e0b
+app/controllers/sessions_controller.rb 18c784e36c38ddb9aa5e6417483810d659002d69
+app/channels/application_cable/channel.rb 54156ee2853cfdea4e3147cdb260776b8d90b646
+app/controllers/application_controller.rb 073280b035e9f738b6124743a23bceaf2e90629a
+>>>>>>> master
 app/channels/application_cable/connection.rb d50148a662b6d182eb9073a5da4cc4115c697ece
