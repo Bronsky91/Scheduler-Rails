@@ -4,7 +4,7 @@ module UsersHelper
         content_tag(:input, nil, class: "timepicker", size: '10')
     end
 
-    # Adds slotbox html elements to view per day
+    # Adds slotbox html elements to view per day 
     def available_time_slots_for(time_hash, day)
         if time_hash == nil
             return
