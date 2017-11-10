@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:edit, :update]
-  before_action :correct_user,   only: [:show, :edit, :update]
+  # use %i for array of symbols, removes some boilerplate
+  before_action :set_user, only: %i[show link_to_redtail edit update destroy]
+  before_action :logged_in_user, only: %i[edit update]
+  before_action :correct_user,   only: %i[show edit update]
+
   require 'base64'
   require 'json'
   # GET /users
@@ -11,31 +13,27 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    # Redtail given API key
-    @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
+  def link_to_redtail
     # Passes API key to JS file
-    gon.apikey = @apikey
+    gon.apikey = API_KEY
     # Redtail username and password entered from Show View
     @reduser = params[:reduser]
     @redpass = params[:redpass]
     # Makes Auth API call if Redtail username and password was entered
     if @reduser && @redpass != nil
-       headers = { 
-         "Authorization"  => "Basic "+ Base64.strict_encode64(@apikey+":"+@reduser+":"+@redpass),
+       headers = {
+         "Authorization"  => "Basic "+ Base64.strict_encode64(API_KEY+":"+@reduser+":"+@redpass),
          "Content-Type" => "application/json"
-         } 
+         }
        @auth = HTTParty.get(
-          "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication", 
+          "http://dev.api2.redtailtechnology.com/crm/v1/rest/authentication",
           :headers => headers)
           # Message that will show in View if API auth failed
         if @auth['Message'] != 'Success'
           flash.now[:error] = "Invalid Redtail login, try again"
           render 'show'
         end
-        
+
         # Saves RedtailID and UserKey to Database
         @user.redtailid = @auth['UserID']
         @user.userkey = @auth['UserKey'].to_s
@@ -48,6 +46,11 @@ class UsersController < ApplicationController
     if @user.timeslot != nil
         @timeslot_parsed = JSON.parse(@user.timeslot)
     end
+  end
+
+  # GET /users/1
+  # GET /users/1.json
+  def show
   end
 
   # GET /users/new
@@ -103,19 +106,18 @@ class UsersController < ApplicationController
   def datepicker
     # Sets JS variables for Datepicker
     @user = User.find_by(username: params[:username])
-    @apikey = '1424B19F-5111-4B39-97A9-953EEEC81A18'
-    gon.apikey = @apikey
     gon.userID = @user.redtailid
     gon.userkey = @user.userkey
     # Creates Variable object of upcoming activities
+    gon.apikey = API_KEY
     @currentDate = Time.now.strftime("%m-%d-%Y")
-    headers = { 
-      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(@apikey+":"+@user.userkey),
+    headers = {
+      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(API_KEY+":"+@userName.userkey),
       "Content-Type" => "application/json", "Accept" => "application/json"
           } 
     # API call to gather all upcoming Redtail Activities
     @calData = HTTParty.post(
-      "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search", 
+      "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search",
       :headers => headers,
       :body => [
         {  
