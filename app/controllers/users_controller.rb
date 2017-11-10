@@ -112,12 +112,12 @@ class UsersController < ApplicationController
     gon.apikey = API_KEY
     @currentDate = Time.now.strftime("%m-%d-%Y")
     headers = {
-      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(API_KEY+":"+@userName.userkey),
+      "Authorization"  => "Userkeyauth "+ Base64.strict_encode64(API_KEY+":"+@user.userkey),
       "Content-Type" => "application/json", "Accept" => "application/json"
           } 
     # API call to gather all upcoming Redtail Activities
     @calData = HTTParty.post(
-      "http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search",
+      'http://dev.api2.redtailtechnology.com/crm/v1/rest/calendar/search',
       :headers => headers,
       :body => [
         {  
@@ -133,7 +133,7 @@ class UsersController < ApplicationController
     # Passes timeslot data json object to Javascript
     @timeslot_parsed = JSON.parse(@user.timeslot)
     gon.timeslotObject = @timeslot_parsed
-    #Javascript variable of datepicker timeslot method
+    # Javascript variable of datepicker timeslot method
     gon.slot = slot(@timeslot_parsed)
   end
 
